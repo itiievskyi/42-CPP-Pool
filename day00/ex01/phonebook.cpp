@@ -26,6 +26,23 @@ std::string	trnct(std::string str) {
 
 }
 
+void		printContact(Contact entry)
+{
+
+	std::cout << "First name: " << entry.getFirstName() << std::endl;
+	std::cout << "Last name: " << entry.getLastName() << std::endl;
+	std::cout << "Nickname: " << entry.getNickName() << std::endl;
+	std::cout << "Login: " << entry.getLogin() << std::endl;
+	std::cout << "Postal address: " << entry.getAddress() << std::endl;
+	std::cout << "Email address: " << entry.getEmail() << std::endl;
+	std::cout << "Phone number: " << entry.getPhone() << std::endl;
+	std::cout << "Birthday date: " << entry.getBirthday() << std::endl;
+	std::cout << "Favorite meal: " << entry.getMeal() << std::endl;
+	std::cout << "Underwear color: " << entry.getUnderwear() << std::endl;
+	std::cout << "Darkest secret: " << entry.getSecret() << std::endl;
+
+}
+
 void		searchContact(Contact book[]) {
 
 	std::string		buf;
@@ -52,12 +69,39 @@ void		searchContact(Contact book[]) {
 	std::cout << "(or type '-' in order to return to main menu)" << std::endl;
 	std::cout << "> ";
 
+	while (1) {
+		std::getline (std::cin, buf);
+		buf.erase(0, buf.find_first_not_of(" "));
+		buf.erase(buf.find_last_not_of(" ") + 1);
+
+		if (buf.length() == 1) {
+			if (buf[0] == '-') {
+				std::cout << "Ok, returning to the main menu...\n" << std::endl;
+				return;
+			} else if (buf[0] - 48 < g_count) {
+				std::cout << "Here is your contact detailed info:" << std::endl;
+				printContact(book[buf[0] - 48]);
+				std::cout << std::endl;
+				return;
+			} else {
+				std::cout << "Invalid index. You can now use numbers from 0 to "
+				<< (g_count - 1) << std::endl;
+				std::cout << "> ";
+			}
+		} else {
+			std::cout << "Invalid index. You can now use numbers from 0 to "
+			<< (g_count - 1) << std::endl;
+			std::cout << "> ";
+		}
+		if (std::cin.eof()) {
+			return;
+		}
+	}
 }
 
 void		addContact(Contact book[]) {
 
 	std::string		buf;
-	std::string		err = "\n! Ctrl + D was pressed. Quitting the program...";
 
 	if (g_count > 7) {
 		std::cout << "Your phonebook is full. Please try another command"
@@ -70,77 +114,66 @@ void		addContact(Contact book[]) {
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setFirstName(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Last name: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setLastName(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Nickname: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setNickName(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Login: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setLogin(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Postal address: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setAddress(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Email address: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setEmail(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Phone number: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setPhone(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Birthday date: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setBirthday(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Favorite meal: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setMeal(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Underwear color: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setUnderwear(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 	std::cout << "Darkest secret: ";
 	if (std::getline (std::cin, buf)) {
 		book[g_count].setSecret(buf);
 	} else {
-		std::cout << err << std::endl;
 		return;
 	}
 
@@ -178,7 +211,8 @@ int			main(void) {
 		} else if (!(std::cin.eof())) {
 			std::cout << "Invalid command. [ADD / SEARCH / EXIT]\n"
 			<< std::endl;
-		} else if (std::cin.eof()) {
+		}
+		if (std::cin.eof()) {
 			std::cout << "\n! Ctrl + D was pressed. Quitting the program..."
 			<< std::endl;
 			return 0;
