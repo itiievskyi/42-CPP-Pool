@@ -14,7 +14,6 @@
 #include "Zombie.hpp"
 #include <iostream>
 #include <string>
-#include <cstdlib>
 
 std::string		letter1 = "aoeiu";
 std::string		letter2 = "wrtpsdfghklbnmc";
@@ -53,7 +52,7 @@ Zombie*		ZombieEvent::randomChump(void) {
 
 	static int count = 0;
 
-	int length = ((int)std::rand() + count * 3) % 8 + 2;
+	int length = ((int)std::rand() + count * 5) % 8 + 2;
 	std::string name = "         ";
 
 	name.resize(length);

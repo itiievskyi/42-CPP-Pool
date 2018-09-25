@@ -12,7 +12,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include <time.h>
 #include "Account.class.hpp"
 
 int		Account::_nbAccounts = 0;
@@ -124,8 +123,8 @@ Account::~Account(void) {
 
 void	Account::_displayTimestamp(void) {
 
-	time_t	now = time(0);
-	tm		*ltm = localtime(&now);
+	std::time_t	now = std::time(0);
+	tm			*ltm = std::localtime(&now);
 
 	std::cout << "[";
 	std::cout << 1900 + ltm->tm_year;

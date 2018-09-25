@@ -18,8 +18,8 @@ int		main(int argc, char **argv) {
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
 	} else {
 		for (int i = 1; i < argc; i++) {
-			size_t len = strlen(argv[i]);
-			for (size_t j = 0; j < len; j++) {
+			std::size_t len = std::strlen(argv[i]);
+			for (std::size_t j = 0; j < len; j++) {
 				std::cout << (char)std::toupper(argv[i][j]);
 			}
 		}
