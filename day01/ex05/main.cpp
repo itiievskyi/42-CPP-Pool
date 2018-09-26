@@ -16,6 +16,9 @@
 
 int		main(void) {
 
+	Human bob;
 
-	return 0;
+	std::cout << bob.identify() << std::endl;
+	std::cout << bob.getBrain().identify() << std::endl;
+
 }

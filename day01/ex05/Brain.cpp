@@ -10,4 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Brain.hpp"
+#include <iostream>
+#include <sstream>
 
+Brain::Brain(void) {
+
+	std::stringstream buffer;
+	buffer << this;
+
+	this->_address = buffer.str();
+
+	return;
+}
+
+Brain::~Brain(void) {
+
+	std::cout << "Oh, this brain just died..." << std::endl;
+	return;
+}
+
+std::string Brain::identify(void) const {
+
+	return this->_address;
+}

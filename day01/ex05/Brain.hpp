@@ -22,9 +22,11 @@ public:
 	Brain(void);
 	~Brain(void);
 
+	std::string	identify(void) const;
 
 private:
 
+	std::string	_address;
 
 };
 

@@ -20,12 +20,17 @@ class	Human {
 
 public:
 
-	Human(void);
+	Human();
 	~Human(void);
-
+	Brain &getBrain(void);
+	std::string identify(void) const;
+	void setName(std::string name);
+	std::string getName(void) const;
 
 private:
 
+	Brain	*_brain;
+	std::string _name;
 
 };
 
