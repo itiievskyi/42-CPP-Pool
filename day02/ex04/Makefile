@@ -12,7 +12,7 @@
 
 C = clang++
 
-NAME = fixedFull
+NAME = eval_expr
 
 FLAGS = -Wall -Wextra -Werror
 
