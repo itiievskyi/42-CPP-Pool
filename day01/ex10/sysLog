@@ -1,0 +1,91 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/01 09:03:35 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/10/01 09:03:38 by itiievsk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
+int main(int argc, char **argv) {
+
+	if (argc == 1) {
+		std::stringstream buf;
+		std::string fileContent;
+		std::getline (std::cin, fileContent);
+		while (!(std::cin.eof())) {
+			std::cout << fileContent << std::endl;
+			std::getline (std::cin, fileContent);
+		}
+	} else {
+		for (int i = 1; i < argc; i++) {
+			std::stringstream buf;
+			std::string fileContent;
+			std::ifstream input(argv[i]);
+			if (!input.is_open()) {
+				std::cerr << "cat: " << argv[i] << ": " << std::strerror(errno)
+				<< std::endl;
+			} else {
+				buf << input.rdbuf();
+				fileContent = buf.str();
+				std::cout << fileContent;
+			}
+		}
+	}
+
+	return 0;
+}
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2018/09/20 13:47:14 by itiievsk          #+#    #+#              #
+#    Updated: 2018/09/20 13:47:20 by itiievsk         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+C = clang++
+
+NAME = cat
+
+FLAGS = -Wall -Wextra -Werror
+
+DIR_S = ./
+
+DIR_O = obj
+
+SOURCES =	main.cpp \
+
+SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
+
+OBJS = $(addprefix $(DIR_O)/,$(SOURCES:.cpp=.o))
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(C) $(FLAGS) -o $(NAME) $(OBJS) $(LIB)
+
+$(DIR_O)/%.o: $(DIR_S)/%.cpp
+	@mkdir -p $(DIR_O)
+	$(C) $(FLAGS) -o $@ -c $<
+
+clean:
+	@rm -f $(OBJS)
+	@rm -rf $(DIR_O)
+
+fclean: clean
+	@rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
