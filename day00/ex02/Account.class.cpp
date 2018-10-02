@@ -96,6 +96,10 @@ int		Account::getNbWithdrawals(void) {
 
 int		Account::checkAmount( void ) const {
 
+	static int count = 0;
+
+	count++;
+
 	return this->_amount;
 }
 
