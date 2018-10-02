@@ -131,7 +131,7 @@ void	ScavTrap::meleeAttack(std::string const &target) {
 	}
 	std::cout << "\033[1;32m" << this->_name << ">\033[0m " <<
 	"Take that, you piece of <censored>!" << " ";
-	std::cout << "<SC4V-TP " << this->_name << " performs melee attack aginst "
+	std::cout << "<SC4V-TP " << this->_name << " performs melee attack against "
 	<< target << ", causing " << this->_meleeAttackDamage <<
 	" points of damage!>" << std::endl;
 

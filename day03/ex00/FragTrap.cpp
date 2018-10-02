@@ -165,7 +165,7 @@ void	FragTrap::meleeAttack(std::string const &target) {
 	}
 	std::cout << "\033[1;31m" << this->_name << ">\033[0m " <<
 	"Heyyaaaaaah!" << " ";
-	std::cout << "<FR4G-TP " << this->_name << " performs melee attack aginst "
+	std::cout << "<FR4G-TP " << this->_name << " performs melee attack against "
 	<< target << ", causing " << this->_meleeAttackDamage <<
 	" points of damage!>" << std::endl;
 
@@ -262,7 +262,7 @@ void	FragTrap::funzerker(std::string const &target) {
 
 	std::cout << "\033[1;31m" << this->_name << ">\033[0m " <<
 	"Don't ask me where this ammo's coming from!" << " ";
-	std::cout << "<FR4G-TP " << this->_name << " use funzerker aginst "
+	std::cout << "<FR4G-TP " << this->_name << " use funzerker against "
 	<< target << ", causing " << this->_funzerkerDamage <<
 	" points of damage! Energy: ";
 
@@ -273,7 +273,7 @@ void	FragTrap::miniontrap(std::string const &target) {
 	std::cout << "\033[1;31m" << this->_name << ">\033[0m " <<
 	"Ratattattattatta! Powpowpowpow! Powpowpowpow! Pew-pew, pew-pew-pewpew!"
 	<< " ";
-	std::cout << "<FR4G-TP " << this->_name << " sets the minion trap aginst "
+	std::cout << "<FR4G-TP " << this->_name << " sets the minion trap against "
 	<< target << ", causing " << this->_miniontrapDamage <<
 	" points of damage! Energy: ";
 
@@ -283,7 +283,7 @@ void	FragTrap::blightbot(std::string const &target) {
 
 	std::cout << "\033[1;31m" << this->_name << ">\033[0m " <<
 	"It's time to phase you suckers out!" << " ";
-	std::cout << "<FR4G-TP " << this->_name << " use blightbot aginst "
+	std::cout << "<FR4G-TP " << this->_name << " use blightbot against "
 	<< target << ", causing " << this->_blightbotDamage <<
 	" points of damage! Energy: ";
 
