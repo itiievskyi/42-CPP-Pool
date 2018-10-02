@@ -33,6 +33,37 @@ ScavTrap::ScavTrap(std::string name) {
 	return;
 }
 
+ScavTrap::ScavTrap(ScavTrap const &src) {
+
+	*this = src;
+
+	return;
+}
+
+ScavTrap::ScavTrap(void) {
+
+	return;
+}
+
+ScavTrap &ScavTrap::operator=(ScavTrap const &src) {
+
+	if (this != &src) {
+		this->_name = src._name;
+		this->_hitPoints = src._hitPoints;
+		this->_maxHitPoints = src._maxHitPoints;
+		this->_energyPoints = src._energyPoints;
+		this->_maxEnergyPoints = src._maxEnergyPoints;
+		this->_level = src._level;
+		this->_meleeAttackDamage = src._meleeAttackDamage;
+		this->_rangedAttackDamage = src._rangedAttackDamage;
+		this->_armorDamageReduction = src._armorDamageReduction;
+		this->_accumulatedDamage = src._accumulatedDamage;
+
+	}
+
+	return *this;
+}
+
 ScavTrap::~ScavTrap(void) {
 
 	if (this->_hitPoints == 0) {

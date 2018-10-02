@@ -13,9 +13,9 @@
 #ifndef FRAGTRAP_H
 # define FRAGTRAP_H
 
-# include <iostream>
+# include "ClapTrap.hpp"
 
-class FragTrap {
+class FragTrap : public ClapTrap {
 
 public:
 
@@ -28,13 +28,8 @@ public:
 
 	void	rangedAttack(std::string const &target);
 	void	meleeAttack(std::string const &target);
-	void	takeDamage(unsigned int amount);
-	void	beRepaired(unsigned int amount);
 	void	vaulthunter_dot_exe(std::string const &target);
 
-	std::string getName(void);
-	unsigned int getMeleeAttackDamage(void);
-	unsigned int getRangedAttackDamage(void);
 	unsigned int getFunzerkerDamage(void);
 	unsigned int getBlightbotDamage(void);
 	unsigned int getMiniontrapDamage(void);
@@ -43,26 +38,11 @@ public:
 
 private:
 
-	std::string	_name;
-
-	unsigned int	_hitPoints;
-	unsigned int	_maxHitPoints;
-	unsigned int	_energyPoints;
-	unsigned int	_maxEnergyPoints;
-	unsigned int	_level;
-	unsigned int	_meleeAttackDamage;
-	unsigned int	_rangedAttackDamage;
-	unsigned int	_armorDamageReduction;
-
 	unsigned int	_funzerkerDamage;
 	unsigned int	_blightbotDamage;
 	unsigned int	_miniontrapDamage;
 	unsigned int	_clapInTheBoxDamage;
 	unsigned int	_laserInfernoDamage;
-
-	unsigned int	_accumulatedDamage;
-
-	void			checkLevel(void);
 
 	void funzerker(std::string const & target);
 	void blightbot(std::string const & target);

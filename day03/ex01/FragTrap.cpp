@@ -38,6 +38,41 @@ FragTrap::FragTrap(std::string name) {
 	return;
 }
 
+FragTrap::FragTrap(FragTrap const &src) {
+
+	*this = src;
+
+	return;
+}
+
+FragTrap::FragTrap(void) {
+
+	return;
+}
+
+FragTrap &FragTrap::operator=(FragTrap const &src) {
+
+	if (this != &src) {
+		this->_name = src._name;
+		this->_hitPoints = src._hitPoints;
+		this->_maxHitPoints = src._maxHitPoints;
+		this->_energyPoints = src._energyPoints;
+		this->_maxEnergyPoints = src._maxEnergyPoints;
+		this->_level = src._level;
+		this->_meleeAttackDamage = src._meleeAttackDamage;
+		this->_rangedAttackDamage = src._rangedAttackDamage;
+		this->_armorDamageReduction = src._armorDamageReduction;
+		this->_accumulatedDamage = src._accumulatedDamage;
+		this->_funzerkerDamage = src._funzerkerDamage;
+		this->_blightbotDamage = src._blightbotDamage;
+		this->_miniontrapDamage = src._miniontrapDamage;
+		this->_clapInTheBoxDamage = src._clapInTheBoxDamage;
+		this->_laserInfernoDamage = src._laserInfernoDamage;
+	}
+
+	return *this;
+}
+
 FragTrap::~FragTrap(void) {
 
 	if (this->_hitPoints == 0) {
