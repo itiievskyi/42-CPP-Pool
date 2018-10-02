@@ -14,7 +14,52 @@
 
 int main(void) {
 
-	std::cout << "/* message */" << '\n';
+	FragTrap *toddy = new FragTrap("Toddy");
+
+	std::cout << "<Let the battle begin!>" << std::endl;
+
+	toddy->rangedAttack("enemy1");
+	toddy->meleeAttack("enemy1");
+
+	toddy->takeDamage(50);
+	toddy->takeDamage(10);
+
+	toddy->beRepaired(20);
+	toddy->beRepaired(70);
+	toddy->beRepaired(20);
+	toddy->beRepaired(20);
+
+	toddy->meleeAttack("enemy2");
+	toddy->takeDamage(30);
+	toddy->meleeAttack("enemy2");
+	toddy->beRepaired(20);
+
+	toddy->vaulthunter_dot_exe("enemy3");
+	toddy->vaulthunter_dot_exe("enemy3");
+	toddy->vaulthunter_dot_exe("enemy3");
+	toddy->vaulthunter_dot_exe("enemy3");
+
+	toddy->takeDamage(50);
+	toddy->beRepaired(20);
+
+	toddy->meleeAttack("enemy4");
+	toddy->meleeAttack("enemy4");
+	toddy->takeDamage(30);
+	toddy->meleeAttack("enemy4");
+
+	toddy->vaulthunter_dot_exe("enemy4");
+	toddy->beRepaired(10);
+
+	toddy->takeDamage(120);
+
+	toddy->rangedAttack("enemy1");
+	toddy->meleeAttack("enemy1");
+	toddy->takeDamage(10);
+	toddy->beRepaired(20);
+
+	std::cout << "<The battle finished>" << std::endl;
+
+	delete toddy;
 
 	return 0;
 }
