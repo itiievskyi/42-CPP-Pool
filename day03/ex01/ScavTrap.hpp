@@ -1,41 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FragTrap.hpp                                       :+:      :+:    :+:   */
+/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/02 08:52:14 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/10/02 08:52:19 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/10/02 12:49:36 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/10/02 12:49:38 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRAGTRAP_H
-# define FRAGTRAP_H
+#ifndef SCAVTRAP_H
+# define SCAVTRAP_H
 
 # include <iostream>
 
-class FragTrap {
+class ScavTrap {
 
 public:
 
-	FragTrap(std::string name);
-	~FragTrap(void);
+	ScavTrap(std::string name);
+	~ScavTrap(void);
 
 	void	rangedAttack(std::string const &target);
 	void	meleeAttack(std::string const &target);
 	void	takeDamage(unsigned int amount);
 	void	beRepaired(unsigned int amount);
-	void	vaulthunter_dot_exe(std::string const &target);
+	void	challengeNewcomer(std::string const &target);
 
 	std::string getName(void);
 	unsigned int getMeleeAttackDamage(void);
 	unsigned int getRangedAttackDamage(void);
-	unsigned int getFunzerkerDamage(void);
-	unsigned int getBlightbotDamage(void);
-	unsigned int getMiniontrapDamage(void);
-	unsigned int getClapInTheBoxDamage(void);
-	unsigned int getLaserInfernoDamage(void);
 
 private:
 
@@ -50,21 +45,9 @@ private:
 	unsigned int	_rangedAttackDamage;
 	unsigned int	_armorDamageReduction;
 
-	unsigned int	_funzerkerDamage;
-	unsigned int	_blightbotDamage;
-	unsigned int	_miniontrapDamage;
-	unsigned int	_clapInTheBoxDamage;
-	unsigned int	_laserInfernoDamage;
-
 	unsigned int	_accumulatedDamage;
 
 	void			checkLevel(void);
-
-	void funzerker(std::string const & target);
-	void blightbot(std::string const & target);
-	void miniontrap(std::string const & target);
-	void clapInTheBox(std::string const & target);
-	void laserInferno(std::string const & target);
 
 };
 
