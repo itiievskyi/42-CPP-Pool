@@ -62,6 +62,26 @@ std::string ClapTrap::getName(void) {
 	return this->_name;
 }
 
+unsigned int ClapTrap::getHitPoints(void) {
+
+	return this->_hitPoints;
+}
+
+unsigned int ClapTrap::getMaxHitPoints(void) {
+
+	return this->_maxHitPoints;
+}
+
+unsigned int ClapTrap::getEnergyPoints(void) {
+
+	return this->_energyPoints;
+}
+
+unsigned int ClapTrap::getMaxEnergyPoints(void) {
+
+	return this->_maxEnergyPoints;
+}
+
 unsigned int ClapTrap::getMeleeAttackDamage(void) {
 
 	return this->_meleeAttackDamage;
@@ -70,6 +90,11 @@ unsigned int ClapTrap::getMeleeAttackDamage(void) {
 unsigned int ClapTrap::getRangedAttackDamage(void) {
 
 	return this->_rangedAttackDamage;
+}
+
+unsigned int ClapTrap::getArmorDamageReduction(void) {
+
+	return this->_armorDamageReduction;
 }
 
 void	ClapTrap::checkLevel(void) {

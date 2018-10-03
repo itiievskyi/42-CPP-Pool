@@ -29,8 +29,13 @@ public:
 	void	beRepaired(unsigned int amount);
 
 	std::string getName(void);
+	unsigned int getHitPoints(void);
+	unsigned int getMaxHitPoints(void);
+	unsigned int getEnergyPoints(void);
+	unsigned int getMaxEnergyPoints(void);
 	unsigned int getMeleeAttackDamage(void);
 	unsigned int getRangedAttackDamage(void);
+	unsigned int getArmorDamageReduction(void);
 
 protected:
 
