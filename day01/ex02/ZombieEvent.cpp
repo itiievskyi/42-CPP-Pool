@@ -62,9 +62,9 @@ Zombie*		ZombieEvent::randomChump(void) {
 			name[i] =
 			std::toupper(letter2[(std::rand() + count) % letter2.length()]);
 		} else if (i % 2 == 0) {
-			name[i] = letter2[(std::rand() + count)% letter2.length()];
+			name[i] = letter2[(std::rand() + count) % letter2.length()];
 		} else {
-			name[i] = letter1[(std::rand() + count)% letter1.length()];
+			name[i] = letter1[(std::rand() + count) % letter1.length()];
 		}
 	}
 	name[length] = '\0';

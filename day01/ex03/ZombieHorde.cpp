@@ -34,7 +34,8 @@ ZombieHorde::ZombieHorde(int N) {
 
 ZombieHorde::~ZombieHorde(void) {
 
-	delete [] this->_horde;;
+	delete [] this->_horde;
+	std::cout << "The Zombie horde are dead. Again. Forever." << std::endl;
 	return;
 }
 

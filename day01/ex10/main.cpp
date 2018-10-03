@@ -14,12 +14,6 @@
 #include <fstream>
 #include <sstream>
 
-/*
-** Only for printing "Is a directory" error message (<filesystem> header is not
-** available in macOS Sierra)
-*/
-#include <sys/stat.h>
-
 int main(int argc, char **argv) {
 
 	if (argc == 1) {
@@ -35,28 +29,37 @@ int main(int argc, char **argv) {
 
 			std::stringstream buf;
 			std::string fileContent;
-			std::ifstream input;
 
-			input.open(argv[i], std::ifstream::in);
+			std::ifstream input(argv[i]);
 
-			struct stat st;
-			std::string file = argv[i];
-			lstat(file.c_str(), &st);
-			if (S_ISDIR(st.st_mode)) {
-				std::cerr << "cat: " << argv[i] << ": Is a directory"
-				<< std::endl;
+			try {
+				input.exceptions(std::ios::failbit | std::ios::badbit);
+				input.seekg(0, std::ios::end);
+				} catch (std::ios_base::failure &err) {
+					std::cerr << "cat: " << argv[i] << ": "
+					<< std::strerror(errno) << std::endl;
+					continue;
+				}
+
+			try {
+				errno = 0;
+				std::string line;
+				while (std::getline(input, line)) {}
+			} catch (std::ios_base::failure &err) {
+				if (errno != 0) {
+					std::cerr << "cat: " << argv[i] << ": "
+					<< std::strerror(errno) << std::endl;
+				} else {
+					std::ifstream input(argv[i]);
+					buf << input.rdbuf();
+					fileContent = buf.str();
+				}
 			}
 
-			if (!input.is_open()) {
-				std::cerr << "cat: " << argv[i] << ": " << std::strerror(errno)
-				<< std::endl;
-			} else {
-				buf << input.rdbuf();
-				fileContent = buf.str();
+			if (input.is_open()) {
 				std::cout << fileContent;
 			}
 		}
 	}
-
 	return 0;
 }
