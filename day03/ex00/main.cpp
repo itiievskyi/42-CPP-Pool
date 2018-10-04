@@ -15,6 +15,8 @@
 int main(void) {
 
 	FragTrap *toddy = new FragTrap("Toddy");
+	FragTrap();
+	FragTrap two = FragTrap();
 
 	std::cout << "<Let the battle begin!>" << std::endl;
 

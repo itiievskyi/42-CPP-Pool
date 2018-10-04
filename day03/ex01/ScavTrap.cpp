@@ -42,6 +42,26 @@ ScavTrap::ScavTrap(ScavTrap const &src) {
 
 ScavTrap::ScavTrap(void) {
 
+	static int count = 0;
+
+	this->_name = "Scav" + std::to_string(count);
+	this->_hitPoints = 100;
+	this->_maxHitPoints = 100;
+	this->_energyPoints = 50;
+	this->_maxEnergyPoints = 50;
+	this->_level = 1;
+	this->_meleeAttackDamage = 20;
+	this->_rangedAttackDamage = 15;
+	this->_armorDamageReduction = 3;
+
+	this->_accumulatedDamage = 0;
+
+	std::cout << "\033[1;32m" << this->_name << ">\033[0m " << this->_name <<
+	" in da house! Look out everybody! Things are about to get awesome!"
+	<< std::endl;
+
+	++count;
+
 	return;
 }
 

@@ -51,6 +51,34 @@ FragTrap::FragTrap(FragTrap const &src) {
 
 FragTrap::FragTrap(void) {
 
+	static int count = 0;
+
+	this->_name = "Frag" + std::to_string(count);
+	this->_hitPoints = 100;
+	this->_maxHitPoints = 100;
+	this->_energyPoints = 100;
+	this->_maxEnergyPoints = 100;
+	this->_level = 1;
+	this->_meleeAttackDamage = 30;
+	this->_rangedAttackDamage = 20;
+	this->_armorDamageReduction = 5;
+
+	this->_funzerkerDamage = 40;
+	this->_blightbotDamage = 40;
+	this->_miniontrapDamage = 40;
+	this->_clapInTheBoxDamage = 40;
+	this->_laserInfernoDamage = 40;
+
+	this->_accumulatedDamage = 0;
+
+	this->_color = "\033[1;31m";
+	this->_type = "FR4G-TP";
+
+	std::cout << this->_color << this->_name << ">\033[0m " << "Hi! I'm "
+	<< this->_name << "! Let's get this party started!" << std::endl;
+
+	++count;
+
 	return;
 }
 

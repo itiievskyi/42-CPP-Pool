@@ -21,6 +21,7 @@ public:
 
 	FragTrap(std::string name);
 	FragTrap(void);
+	FragTrap(int);
 	FragTrap(FragTrap const &src);
 	~FragTrap(void);
 

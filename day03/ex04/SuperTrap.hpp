@@ -18,7 +18,7 @@
 # include "ClapTrap.hpp"
 # include "NinjaTrap.hpp"
 
-class SuperTrap : public NinjaTrap, public FragTrap {
+class SuperTrap : public FragTrap, public NinjaTrap {
 
 public:
 

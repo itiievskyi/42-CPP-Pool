@@ -47,6 +47,28 @@ NinjaTrap::NinjaTrap(NinjaTrap const &src) {
 
 NinjaTrap::NinjaTrap(void) {
 
+	static int count = 0;
+
+	this->_name = "Ninja" + std::to_string(count);
+	this->_hitPoints = 60;
+	this->_maxHitPoints = 60;
+	this->_energyPoints = 120;
+	this->_maxEnergyPoints = 120;
+	this->_level = 1;
+	this->_meleeAttackDamage = 60;
+	this->_rangedAttackDamage = 5;
+	this->_armorDamageReduction = 0;
+
+	this->_accumulatedDamage = 0;
+
+	this->_color = "\033[1;35m";
+	this->_type = "NNJ-TP";
+
+	std::cout << this->_color << this->_name << ">\033[0m " << "Hi! I'm "
+	<< this->_name << "! Let's get this party started!" << std::endl;
+
+	++count;
+
 	return;
 }
 

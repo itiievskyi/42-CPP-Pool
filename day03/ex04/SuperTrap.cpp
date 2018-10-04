@@ -12,17 +12,10 @@
 
 #include "SuperTrap.hpp"
 
-SuperTrap::SuperTrap(std::string name) {
+SuperTrap::SuperTrap(std::string name) : FragTrap(1), NinjaTrap(1) {
 
 	this->_name = name;
-	this->_hitPoints = 100;
-	this->_maxHitPoints = 100;
-	this->_energyPoints = 120;
-	this->_maxEnergyPoints = 120;
 	this->_level = 1;
-	this->_meleeAttackDamage = 60;
-	this->_rangedAttackDamage = 20;
-	this->_armorDamageReduction = 5;
 
 	this->_accumulatedDamage = 0;
 
@@ -43,6 +36,21 @@ SuperTrap::SuperTrap(SuperTrap const &src) {
 }
 
 SuperTrap::SuperTrap(void) {
+
+	static int count = 0;
+
+	this->_name = "Super" + std::to_string(count);
+	this->_level = 1;
+
+	this->_accumulatedDamage = 0;
+
+	this->_color = "\033[1;36m";
+	this->_type = "SPR-TP";
+
+	std::cout << this->_color << this->_name << ">\033[0m " << "Hi! I'm "
+	<< this->_name << "! Meet the SUPERSTAR!!!" << std::endl;
+
+	++count;
 
 	return;
 }

@@ -24,6 +24,7 @@ public:
 	NinjaTrap(std::string name);
 	NinjaTrap(void);
 	NinjaTrap(NinjaTrap const &src);
+	NinjaTrap(int);
 	~NinjaTrap(void);
 
 	NinjaTrap &operator=(NinjaTrap const &src);
