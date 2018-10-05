@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   SuperMutant.hpp                                    :+:      :+:    :+:   */
+/*   MegaGun.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/04 20:39:36 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/10/04 20:39:36 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/10/05 14:19:01 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/10/05 14:19:02 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SUPERMUTANT_H
-# define SUPERMUTANT_H
+#ifndef MEGAGUN_H
+# define MEGAGUN_H
 
 # include <iostream>
-# include "Enemy.hpp"
+# include "AWeapon.hpp"
 
-class SuperMutant : public Enemy {
+class MegaGun : public AWeapon {
 
 public:
 
-	SuperMutant(void);
-	SuperMutant(SuperMutant const &src);
-	SuperMutant &operator=(SuperMutant const &src);
-	virtual ~SuperMutant(void);
+	MegaGun(void);
+	MegaGun(MegaGun const &src);
+	MegaGun &operator=(MegaGun const &src);
+	virtual ~MegaGun(void);
 
-	virtual void takeDamage(int);
+	void attack(void) const;
 
 };
 

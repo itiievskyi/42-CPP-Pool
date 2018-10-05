@@ -10,4 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef POWERFIST_H
+# define POWERFIST_H
 
+# include <iostream>
+# include "AWeapon.hpp"
+
+class PowerFist : public AWeapon {
+
+public:
+
+	PowerFist(void);
+	PowerFist(PowerFist const &src);
+	PowerFist &operator=(PowerFist const &src);
+	virtual ~PowerFist(void);
+
+	void attack(void) const;
+
+};
+
+#endif

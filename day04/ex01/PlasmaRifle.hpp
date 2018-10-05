@@ -10,4 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PLASMARIFLE_H
+# define PLASMARIFLE_H
 
+# include <iostream>
+# include "AWeapon.hpp"
+
+class PlasmaRifle : public AWeapon {
+
+public:
+
+	PlasmaRifle(void);
+	PlasmaRifle(PlasmaRifle const &src);
+	PlasmaRifle &operator=(PlasmaRifle const &src);
+	virtual ~PlasmaRifle(void);
+
+	void attack(void) const;
+
+};
+
+#endif

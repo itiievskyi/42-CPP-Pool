@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   SuperMutant.hpp                                    :+:      :+:    :+:   */
+/*   WastelandBeast.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/04 20:39:36 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/10/04 20:39:36 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/10/05 14:23:25 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/10/05 14:23:27 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SUPERMUTANT_H
-# define SUPERMUTANT_H
+#ifndef WASTELANDBEAST_H
+# define WASTELANDBEAST_H
 
 # include <iostream>
 # include "Enemy.hpp"
 
-class SuperMutant : public Enemy {
+class WastelandBeast : public Enemy {
 
 public:
 
-	SuperMutant(void);
-	SuperMutant(SuperMutant const &src);
-	SuperMutant &operator=(SuperMutant const &src);
-	virtual ~SuperMutant(void);
-
-	virtual void takeDamage(int);
+	WastelandBeast(void);
+	WastelandBeast(WastelandBeast const &src);
+	WastelandBeast &operator=(WastelandBeast const &src);
+	virtual ~WastelandBeast(void);
 
 };
 

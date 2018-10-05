@@ -20,7 +20,7 @@ class AWeapon {
 public:
 
 	AWeapon(void);
-	AWeapon(std::string const & name, int apcost, int damage);
+	AWeapon(std::string const &name, int apcost, int damage);
 	AWeapon(AWeapon const &src);
 	AWeapon &operator=(AWeapon const &src);
 	virtual ~AWeapon(void);

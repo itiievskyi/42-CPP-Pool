@@ -1,41 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RadScorpion.cpp                                    :+:      :+:    :+:   */
+/*   WastelandBeast.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/04 20:39:50 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/10/04 20:39:50 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/10/05 14:23:20 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/10/05 14:23:22 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RadScorpion.hpp"
+#include "WastelandBeast.hpp"
 
-RadScorpion::RadScorpion(void) : Enemy(80, "RadScorpion") {
+WastelandBeast::WastelandBeast(void) : Enemy(125, "WastelandBeast") {
 
-	std::cout << "* click click click *" << std::endl;
+	std::cout << "* AAAAAAAAAAAAAAAAAAA *" << std::endl;
 
 	return;
 }
 
-RadScorpion::RadScorpion(RadScorpion const &src) : Enemy(80, "RadScorpion") {
+WastelandBeast::WastelandBeast(WastelandBeast const &src) :
+Enemy(80, "WastelandBeast") {
 
 	*this = src;
 
 	return;
 }
 
-RadScorpion &RadScorpion::operator=(RadScorpion const &src) {
+WastelandBeast &WastelandBeast::operator=(WastelandBeast const &src) {
 
 	Enemy::operator=(src);
 
 	return *this;;
 }
 
-RadScorpion::~RadScorpion(void) {
+WastelandBeast::~WastelandBeast(void) {
 
-	std::cout << "* SPROTCH *" << std::endl;
+	std::cout << "* ZZZZZZZZZZZZZZZZZZ *" << std::endl;
 
 	return;
 }

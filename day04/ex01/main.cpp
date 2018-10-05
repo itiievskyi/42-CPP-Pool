@@ -17,6 +17,8 @@
 #include "PowerFist.hpp"
 #include "RadScorpion.hpp"
 #include "SuperMutant.hpp"
+#include "WastelandBeast.hpp"
+#include "MegaGun.hpp"
 
 int main() {
 
@@ -50,7 +52,55 @@ int main() {
 **	Additional tests
 */
 
+	Character *pers = new Character();
 
+	std::cout << *pers;
+
+	Enemy* mutant = new SuperMutant();
+	Enemy* beast = new WastelandBeast();
+
+	std::cout << pers->getEquipped() << std::endl;
+
+	pers->attack(mutant);
+	pers->attack(beast);
+
+	AWeapon* mg = new MegaGun();
+
+	pers->equip(mg);
+
+	std::cout << *pers;
+	std::cout << "mutant hp: " << mutant->getHP() << std::endl;
+
+	pers->attack(mutant);
+	std::cout << *pers;
+
+	std::cout << "mutant hp: " << mutant->getHP() << std::endl;
+
+	pers->attack(mutant);
+	pers->attack(mutant);
+	pers->attack(mutant);
+
+
+	std::cout << *pers;
+
+	pers->attack(mutant);
+
+	pers->recoverAP();
+	std::cout << *pers;
+
+	pers->recoverAP();
+	pers->recoverAP();
+	pers->recoverAP();
+	pers->recoverAP();
+	std::cout << *pers;
+
+	std::cout << "beast hp: " << beast->getHP() << std::endl;
+
+	pers->attack(beast);
+
+	std::cout << "beast hp: " << beast->getHP() << std::endl;
+
+	pers->attack(beast);
 
 	return 0;
 }

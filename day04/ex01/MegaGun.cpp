@@ -1,41 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   RadScorpion.cpp                                    :+:      :+:    :+:   */
+/*   MegaGun.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/04 20:39:50 by itiievsk          #+#    #+#             */
-/*   Updated: 2018/10/04 20:39:50 by itiievsk         ###   ########.fr       */
+/*   Created: 2018/10/05 14:18:54 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/10/05 14:18:56 by itiievsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "RadScorpion.hpp"
+#include "MegaGun.hpp"
 
-RadScorpion::RadScorpion(void) : Enemy(80, "RadScorpion") {
-
-	std::cout << "* click click click *" << std::endl;
+MegaGun::MegaGun(void) : AWeapon(("Mega Gun"), 10, 100) {
 
 	return;
 }
 
-RadScorpion::RadScorpion(RadScorpion const &src) : Enemy(80, "RadScorpion") {
+MegaGun::MegaGun(MegaGun const &src) :
+AWeapon(("Mega Gun"), 10, 100) {
 
 	*this = src;
 
 	return;
 }
 
-RadScorpion &RadScorpion::operator=(RadScorpion const &src) {
+MegaGun &MegaGun::operator=(MegaGun const &src) {
 
-	Enemy::operator=(src);
+	AWeapon::operator=(src);
 
 	return *this;;
 }
 
-RadScorpion::~RadScorpion(void) {
+MegaGun::~MegaGun(void) {
 
-	std::cout << "* SPROTCH *" << std::endl;
+	return;
+}
+
+void MegaGun::attack(void) const {
+
+	std::cout << "* BABANG! *" << std::endl;
 
 	return;
 }

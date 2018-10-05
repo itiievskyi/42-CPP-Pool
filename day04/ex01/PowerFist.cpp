@@ -10,4 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "PowerFist.hpp"
 
+PowerFist::PowerFist(void) : AWeapon(("Power Fist"), 8, 50) {
+
+	return;
+}
+
+PowerFist::PowerFist(PowerFist const &src) :
+AWeapon(("Power Fist"), 8, 50) {
+
+	*this = src;
+
+	return;
+}
+
+PowerFist &PowerFist::operator=(PowerFist const &src) {
+
+	AWeapon::operator=(src);
+
+	return *this;;
+}
+
+PowerFist::~PowerFist(void) {
+
+	return;
+}
+
+void PowerFist::attack(void) const {
+
+	std::cout << "* pschhh... SBAM! *" << std::endl;
+
+	return;
+}
