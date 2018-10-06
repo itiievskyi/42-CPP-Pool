@@ -40,6 +40,7 @@ int main() {
 
 	while (!game->getResult()) {
 		nodelay(stdscr, TRUE);
+		game->updatePlayers();
 		game->check_button();
 		game->print_map();
 		game->manage_bullets();

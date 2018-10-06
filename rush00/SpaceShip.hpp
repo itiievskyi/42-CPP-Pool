@@ -11,6 +11,7 @@ protected:
 	int y;
 	Bullet *_bullet;
 	int _activeAttack;
+	int _status;
 
 public:
 	SpaceShip();
@@ -22,12 +23,14 @@ public:
 
 	int  getX() const;
 	int  getY() const;
+	int  getStatus() const;
 	bool  getActiveAttack() const;
 	Bullet *getBullet() const;
 	void setX(int x);
 	void setY(int y);
 	void setActiveAttack(bool act);
 	void setBullet(Bullet*);
+	void setStatus(int status);
 
 	virtual void attack() = 0;
 };

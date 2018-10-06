@@ -7,6 +7,8 @@ SpaceShip::SpaceShip(int x, int y) : x(x), y(y) {
 
 	this->_bullet = nullptr;
 	this->_activeAttack = false;
+	this->_status = 0;
+
 }
 
 SpaceShip::SpaceShip(SpaceShip const &s) {
@@ -57,6 +59,17 @@ void SpaceShip::setActiveAttack(bool act) {
 void  SpaceShip::setBullet(Bullet* bullet) {
 
 	this->_bullet = bullet;
+
+	return;
+}
+
+int  SpaceShip::getStatus() const {
+
+	return this->_status;
+}
+void SpaceShip::setStatus(int status) {
+
+	this->_status = status;
 
 	return;
 }

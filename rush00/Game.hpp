@@ -16,7 +16,7 @@
 # define COLOR_GREY 8
 # define HELP_LINES 30
 # define HELP_COLS 103
-# define NUM_OF_ENEMIES 42
+# define NUM_OF_ENEMIES 3
 # define HEIGHT 66
 # define WIDTH 197
 
@@ -41,6 +41,7 @@ public:
 	void init_colors(void) const;
 	void print_template(void) const;
 	void check_button(void);
+	void updatePlayers(void);
 	void print_map(void);
 	static void sighandler(int signum);
 
@@ -60,6 +61,8 @@ public:
 	void setResult(int);
 	int getScore(void) const;
 	void setScore(int);
+	int getCycle(void) const;
+	void setCycle(int);
 
 private:
 
@@ -72,8 +75,10 @@ private:
 	int			_score;
 	int			_pause;
 	int			_liveEnemies;
+	int			_respawnDelay;
+	int			_cycle;
 	char		_map[HEIGHT][WIDTH];
-//	Enemy		*enemies[NUM_OF_ENEMIES];
+	Enemy		*_enemies[NUM_OF_ENEMIES];
 	Good		_hero;
 	t_bullet	*_bulletList;
 

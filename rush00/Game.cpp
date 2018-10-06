@@ -19,13 +19,19 @@ Game::Game(void) {
 	this->_result = 0;
 	this->_score = 0;
 	this->_pause = 0;
-	this->_liveEnemies = 42;
+	this->_liveEnemies = NUM_OF_ENEMIES;
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
 			this->_map[i][j] = ' ';
 		}
 	}
+	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+
+		this->_enemies[i] = new Enemy(15, 15);
+	}
 	this->_bulletList = nullptr;
+	this->_respawnDelay = 10;
+	this->_cycle = 0;
 	this->_hero = Good(std::rand() % 66, 1);
 	this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
 	return;
@@ -76,7 +82,18 @@ void Game::manage_bullets() {
 	}
 }
 
+void	Game::updatePlayers() {
+
+
+
+	return;
+}
+
 void Game::print_map(void) {
+
+	static int count = 0;
+	++count;
+	this->_cycle = count;
 
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
@@ -92,6 +109,7 @@ void Game::print_map(void) {
 		}
 	}
 
+	mvprintw(60, 202, "Cycle = % 5d", this->_cycle);
 	return;
 }
 
@@ -313,6 +331,20 @@ void Game::setScore(int score) {
 
 	if (score >= 0) {
 		this->_score += score;
+	}
+
+	return;
+}
+
+int Game::getCycle(void) const {
+
+	return this->_cycle;
+}
+
+void Game::setCycle(int cycle) {
+
+	if (cycle >= 0) {
+		this->_cycle += cycle;
 	}
 
 	return;
