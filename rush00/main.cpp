@@ -11,8 +11,12 @@
 /* ************************************************************************** */
 
 #include "Game.hpp"
+#include "SpaceShip.hpp"
+#include "Enemy.hpp"
+#include "Gamer.hpp"
 #include <ncurses.h>
 #include <csignal>
+#include <ctime>
 
 int main() {
 
@@ -32,8 +36,9 @@ int main() {
 
 	while (!game->getResult()) {
 		nodelay(stdscr, TRUE);
-		game->check_pause();
+		game->check_button();
 		refresh();
+		usleep()
 	}
 
 

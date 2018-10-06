@@ -188,9 +188,7 @@ void Game::sighandler(int signum) {
 	cbreak();
 }
 
-
-
-void Game::check_pause(void) {
+void Game::check_button(void) {
 
 
 	return;
