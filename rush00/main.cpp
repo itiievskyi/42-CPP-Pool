@@ -24,8 +24,6 @@ int main() {
 
 	std::srand(std::time(nullptr));
 
-	std::cout << "/* message */" << '\n';
-
 	std::signal(SIGINT, Game::sighandler);
 	setlocale(LC_ALL, "en_US.UTF-8");
 	initscr();
@@ -40,10 +38,10 @@ int main() {
 
 	while (!game->getResult()) {
 		nodelay(stdscr, TRUE);
+		game->manage_bullets();
 		game->updatePlayers();
 		game->check_button();
 		game->print_map();
-		game->manage_bullets();
 		refresh();
 		usleep(15000);
 	}

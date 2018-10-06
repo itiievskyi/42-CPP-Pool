@@ -16,7 +16,7 @@
 # define COLOR_GREY 8
 # define HELP_LINES 30
 # define HELP_COLS 103
-# define NUM_OF_ENEMIES 3
+# define NUM_OF_ENEMIES 42
 # define HEIGHT 66
 # define WIDTH 197
 
@@ -51,7 +51,7 @@ public:
 
 	void manage_bullets();
 	void pushBullet(Bullet *);
-
+	void findShip(int y, int x);
 
 /*
 **	Getters & Setters

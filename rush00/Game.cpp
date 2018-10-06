@@ -26,8 +26,21 @@ Game::Game(void) {
 		}
 	}
 	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
-
-		this->_enemies[i] = new Enemy(15, 15);
+		this->_enemies[i] = new Enemy(0, 197);
+	}
+	int position = 0;
+	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+		int unique = 0;
+		while (unique < NUM_OF_ENEMIES) {
+			unique = 0;
+			position = std::rand() % 65 + 1;
+			for (int j = 0; j < NUM_OF_ENEMIES; j++) {
+				if (position != this->_enemies[j]->getX()) {
+					unique++;
+				}
+			}
+		}
+		this->_enemies[i]->setX(position);
 	}
 	this->_bulletList = nullptr;
 	this->_respawnDelay = 10;
@@ -58,6 +71,18 @@ Game::~Game(void) {
 	return;
 }
 
+void Game::findShip(int x, int y) {
+x = 0;
+	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+		if (this->_enemies[i]->getStatus() == 1 && this->_enemies[i]->getY() == y) {
+			this->_liveEnemies -= 1;
+			this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = ' ';
+			this->_enemies[i]->setStatus(-1);
+			break;
+		}
+	}
+}
+
 void Game::manage_bullets() {
 
 	if (this->_hero.getActiveAttack() == true) {
@@ -72,6 +97,10 @@ void Game::manage_bullets() {
 			if (temp->next->bullet->getX() + 2 > WIDTH) {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				temp->next = temp->next->next;
+			} else if (this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() + 1] == '<') {
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+				this->findShip(temp->next->bullet->getY(), temp->next->bullet->getX() + 1);
+				temp->next = temp->next->next;
 			} else {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				temp->next->bullet->setX(temp->next->bullet->getX() + 1);
@@ -84,7 +113,27 @@ void Game::manage_bullets() {
 
 void	Game::updatePlayers() {
 
+	static int count = 0;
 
+	if (this->_cycle % 100 == 50 && count < NUM_OF_ENEMIES) {
+
+		this->_enemies[count]->setStatus(1);
+
+		++count;
+	}
+
+	if (this->_cycle % 10 == 0) {
+		for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+			if (this->_enemies[i]->getStatus() == 1) {
+				if (this->_enemies[i]->getY() == 0) {
+					this->_result = -1;
+				}
+				this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = ' ';
+				this->_enemies[i]->setY(this->_enemies[i]->getY() - 1);
+				this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = '<';
+			}
+		}
+	}
 
 	return;
 }
@@ -102,10 +151,10 @@ void Game::print_map(void) {
 	}
 
 	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
-		if (i < this->_liveEnemies) {
+		if (this->_enemies[i]->getStatus() != -1) {
 			mvaddch(25 + i / 6, 214 + i % 6 + i % 6 * 3, '^');
 		} else {
-			mvaddch(25 + i / 6, 214 + i % 6, ' ');
+			mvaddch(25 + i / 6, 214 + i % 6 + i % 6 * 3, ' ');
 		}
 	}
 
@@ -190,7 +239,6 @@ void Game::print_template(void) const {
 
 	mvaddstr(71, 202, "The project is prepared for 42School's project");
 	mvaddstr(72, 202, "CPP-POOL / Rush00 in 2018. All rights reserved");
-//	mvprintw(37 - 1, 202, "The current game speed modifier:  0");
 	attroff(COLOR_PAIR(5) | A_BOLD);
 
 	return;
