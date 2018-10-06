@@ -82,12 +82,36 @@ x = 0;
 		}
 	}
 }
+/*
+void Game::findBullet(int x, int y) {
+
+x = 0;
+	t_bullet	*temp = this->_bulletList;
+
+	while (temp && temp->next != nullptr) {
+		if ( temp->next->bullet->getY() == y && temp->next->bullet->getBad() == true) {
+			this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+
+			temp->next = temp->next->next;
+		}
+		temp = temp->next;
+	}
+
+}
+*/
 
 void Game::manage_bullets() {
 
 	if (this->_hero.getActiveAttack() == true) {
 		this->pushBullet(this->_hero.getBullet());
 		this->_hero.setActiveAttack(false);
+	}
+
+	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+		if (this->_enemies[i]->getActiveAttack() == true) {
+			this->pushBullet(this->_enemies[i]->getBullet());
+			this->_enemies[i]->setActiveAttack(false);
+		}
 	}
 
 	t_bullet	*temp = this->_bulletList;
@@ -104,6 +128,19 @@ void Game::manage_bullets() {
 			} else {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				temp->next->bullet->setX(temp->next->bullet->getX() + 1);
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = temp->next->bullet->getType();
+			}
+		} else {
+			if (temp->next->bullet->getX() - 2 < 0) {
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+				temp->next = temp->next->next;
+			} else if (this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() - 1] == '>') {
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+				this->_hero.takeDamage(temp->next->bullet->getDamage());
+				temp->next = temp->next->next;
+			} else {
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+				temp->next->bullet->setX(temp->next->bullet->getX() - 1);
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = temp->next->bullet->getType();
 			}
 		}
@@ -133,6 +170,22 @@ void	Game::updatePlayers() {
 				this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = '<';
 			}
 		}
+	}
+
+	if (this->_cycle / 100 > 1 && this->_cycle % 100 == 1) {
+		int position = 0;
+		int active = 0;
+		while (active != 1) {
+			position = std::rand() % NUM_OF_ENEMIES;
+			if (this->_enemies[position]->getStatus() == 1) {
+				active = 1;
+			}
+		}
+		this->_enemies[position]->attack();
+	}
+
+	if (this->_hero.getHP() == 0) {
+		this->_result = -1;
 	}
 
 	return;

@@ -73,3 +73,21 @@ void SpaceShip::setStatus(int status) {
 
 	return;
 }
+
+int  SpaceShip::getHP() const {
+
+	return this->_hp;
+}
+
+void SpaceShip::takeDamage(int damage) {
+
+	if (this->_hp > 0 && damage > 0) {
+		if (damage >= this->_hp) {
+			this->_hp = 0;
+		} else {
+			this->_hp -= damage;
+		}
+	}
+
+	return;
+}

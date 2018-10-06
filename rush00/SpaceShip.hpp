@@ -12,6 +12,7 @@ protected:
 	Bullet *_bullet;
 	int _activeAttack;
 	int _status;
+	int _hp;
 
 public:
 	SpaceShip();
@@ -31,6 +32,8 @@ public:
 	void setActiveAttack(bool act);
 	void setBullet(Bullet*);
 	void setStatus(int status);
+	int  getHP() const;
+	void takeDamage(int damage);
 
 	virtual void attack() = 0;
 };

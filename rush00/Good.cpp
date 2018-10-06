@@ -12,7 +12,9 @@
 
 #include "Good.hpp"
 
-Good::Good() : SpaceShip() {}
+Good::Good() : SpaceShip() {
+	this->_hp = 100;
+}
 
 Good::Good(int x, int y) : SpaceShip(x, y) {}
 

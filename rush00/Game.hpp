@@ -52,6 +52,7 @@ public:
 	void manage_bullets();
 	void pushBullet(Bullet *);
 	void findShip(int y, int x);
+	void findBullet(int y, int x);
 
 /*
 **	Getters & Setters

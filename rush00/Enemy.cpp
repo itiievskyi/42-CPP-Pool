@@ -19,4 +19,10 @@ Enemy & Enemy::operator=(Enemy const &e) {
 	return *this;
 }
 
-void Enemy::attack() {}
+void Enemy::attack() {
+
+	this->_bullet = new Bullet(this->y - 1, this->x);
+	this->_activeAttack = true;
+
+	return;
+}

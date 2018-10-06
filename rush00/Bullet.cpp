@@ -21,10 +21,10 @@ Bullet::Bullet(int x, int y) {
 
 	this->_x = x;
 	this->_y = y;
-	this->_type = '-';
+	this->_type = '*';
 	this->_bad = true;
 	this->_color = 5;
-	this->_damage = 5;
+	this->_damage = 30;
 
 	return;
 }
@@ -36,7 +36,7 @@ Bullet::Bullet(bool owner, int x, int y) {
 	this->_type = '-';
 	this->_bad = owner;
 	this->_color = 4;
-	this->_damage = 5;
+	this->_damage = 30;
 
 	return;
 }
@@ -48,7 +48,7 @@ Bullet::Bullet(char type, int x, int y) {
 	this->_type = type;
 	this->_bad = true;
 	this->_color = 5;
-	this->_damage = 10;
+	this->_damage = 50;
 
 	return;
 }

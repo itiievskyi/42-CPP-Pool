@@ -69,7 +69,7 @@ std::string Enemy::getType(void) const {
 
 void Enemy::takeDamage(int damage) {
 
-	if (this->_hp > 0 & damage > 0) {
+	if (this->_hp > 0 && damage > 0) {
 		if (damage >= this->_hp) {
 			this->_hp = 0;
 		} else {
