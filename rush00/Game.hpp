@@ -24,6 +24,7 @@
 # include "SpaceShip.hpp"
 # include "Enemy.hpp"
 # include "Good.hpp"
+# include "Bullet.hpp"
 
 class Game {
 
@@ -47,6 +48,8 @@ public:
 **	Game functions
 */
 
+	void manage_bullets();
+	void pushBullet(Bullet *);
 
 
 /*
@@ -60,6 +63,11 @@ public:
 
 private:
 
+	typedef struct		s_bullet {
+		Bullet			*bullet;
+		struct s_bullet	*next;
+	}					t_bullet;
+
 	int			_result;
 	int			_score;
 	int			_pause;
@@ -67,6 +75,7 @@ private:
 	char		_map[HEIGHT][WIDTH];
 //	Enemy		*enemies[NUM_OF_ENEMIES];
 	Good		_hero;
+	t_bullet	*_bulletList;
 
 };
 

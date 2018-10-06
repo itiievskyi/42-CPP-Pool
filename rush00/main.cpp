@@ -14,9 +14,11 @@
 #include "SpaceShip.hpp"
 #include "Enemy.hpp"
 #include "Good.hpp"
+#include "Bullet.hpp"
 #include <ncurses.h>
 #include <csignal>
 #include <ctime>
+#include <unistd.h>
 
 int main() {
 
@@ -40,8 +42,9 @@ int main() {
 		nodelay(stdscr, TRUE);
 		game->check_button();
 		game->print_map();
+		game->manage_bullets();
 		refresh();
-//		std::usleep();
+		usleep(15000);
 	}
 
 

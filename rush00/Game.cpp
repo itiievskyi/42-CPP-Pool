@@ -25,6 +25,7 @@ Game::Game(void) {
 			this->_map[i][j] = ' ';
 		}
 	}
+	this->_bulletList = nullptr;
 	this->_hero = Good(std::rand() % 66, 1);
 	this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
 	return;
@@ -49,6 +50,30 @@ Game &Game::operator=(Game const &src) {
 Game::~Game(void) {
 
 	return;
+}
+
+void Game::manage_bullets() {
+
+	if (this->_hero.getActiveAttack() == true) {
+		this->pushBullet(this->_hero.getBullet());
+		this->_hero.setActiveAttack(false);
+	}
+
+	t_bullet	*temp = this->_bulletList;
+
+	while (temp && temp->next != nullptr) {
+		if (temp->next->bullet->getBad() == false) {
+			if (temp->next->bullet->getX() + 2 > WIDTH) {
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+				temp->next = temp->next->next;
+			} else {
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+				temp->next->bullet->setX(temp->next->bullet->getX() + 1);
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = temp->next->bullet->getType();
+			}
+		}
+		temp = temp->next;
+	}
 }
 
 void Game::print_map(void) {
@@ -240,6 +265,28 @@ void Game::check_button(void) {
 		this->_hero.setX(this->_hero.getX() + 1);
 		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
 		ch = '\0';
+	} else if (ch == ' ') {
+		this->_hero.attack();
+	}
+
+	return;
+}
+
+void	Game::pushBullet(Bullet *newBullet) {
+
+	t_bullet	*temp = this->_bulletList;
+
+	if (this->_bulletList == nullptr) {
+		this->_bulletList = new t_bullet;
+		this->_bulletList->bullet = newBullet;
+		this->_bulletList->next = nullptr;
+	} else {
+		while (temp->next != nullptr) {
+			temp = temp->next;
+		}
+		temp->next = new t_bullet;
+		temp->next->bullet = newBullet;
+		temp->next->next = nullptr;
 	}
 
 	return;

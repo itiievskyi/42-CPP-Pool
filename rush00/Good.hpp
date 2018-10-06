@@ -1,7 +1,8 @@
 #ifndef GOOD_HPP
-#define GOOD_HPP
+# define GOOD_HPP
 
-#include "SpaceShip.hpp"
+# include "SpaceShip.hpp"
+# include "Bullet.hpp"
 
 class Good : public SpaceShip
 {

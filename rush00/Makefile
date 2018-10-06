@@ -25,6 +25,7 @@ SOURCES =	main.cpp \
 			SpaceShip.cpp \
 			Enemy.cpp \
 			Good.cpp \
+			Bullet.cpp \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

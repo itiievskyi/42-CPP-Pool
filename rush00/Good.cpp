@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Good.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itiievsk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/06 17:13:40 by itiievsk          #+#    #+#             */
+/*   Updated: 2018/10/06 17:13:41 by itiievsk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Good.hpp"
 
 Good::Good() : SpaceShip() {}
@@ -19,4 +31,10 @@ Good & Good::operator=(Good const &g) {
 	return *this;
 }
 
-void Good::attack() {}
+void Good::attack() {
+
+	this->_bullet = new Bullet(false, this->y + 1, this->x);
+	this->_activeAttack = true;
+
+	return;
+}

@@ -1,8 +1,13 @@
 #include "SpaceShip.hpp"
+#include "Bullet.hpp"
 
 SpaceShip::SpaceShip() {}
 
-SpaceShip::SpaceShip(int x, int y) : x(x), y(y) {}
+SpaceShip::SpaceShip(int x, int y) : x(x), y(y) {
+
+	this->_bullet = nullptr;
+	this->_activeAttack = false;
+}
 
 SpaceShip::SpaceShip(SpaceShip const &s) {
 	*this = s;
@@ -33,4 +38,25 @@ void SpaceShip::setX(int x) {
 
 void SpaceShip::setY(int y) {
 	this->y = y;
+}
+
+bool  SpaceShip::getActiveAttack() const {
+
+	return this->_activeAttack;
+}
+Bullet *SpaceShip::getBullet() const {
+
+	return this->_bullet;
+}
+void SpaceShip::setActiveAttack(bool act) {
+
+	this->_activeAttack = act;
+
+	return;
+}
+void  SpaceShip::setBullet(Bullet* bullet) {
+
+	this->_bullet = bullet;
+
+	return;
 }

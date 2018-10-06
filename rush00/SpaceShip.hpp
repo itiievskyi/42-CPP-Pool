@@ -2,12 +2,16 @@
 #define SPACESHIP_HPP
 
 #include <iostream>
+#include "Bullet.hpp"
 
-class SpaceShip
-{
+class SpaceShip {
+
 protected:
 	int x;
 	int y;
+	Bullet *_bullet;
+	int _activeAttack;
+
 public:
 	SpaceShip();
 	SpaceShip(int x, int y);
@@ -18,8 +22,12 @@ public:
 
 	int  getX() const;
 	int  getY() const;
+	bool  getActiveAttack() const;
+	Bullet *getBullet() const;
 	void setX(int x);
 	void setY(int y);
+	void setActiveAttack(bool act);
+	void setBullet(Bullet*);
 
 	virtual void attack() = 0;
 };
