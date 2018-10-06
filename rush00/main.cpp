@@ -13,12 +13,14 @@
 #include "Game.hpp"
 #include "SpaceShip.hpp"
 #include "Enemy.hpp"
-#include "Gamer.hpp"
+#include "Good.hpp"
 #include <ncurses.h>
 #include <csignal>
 #include <ctime>
 
 int main() {
+
+	std::srand(std::time(nullptr));
 
 	std::cout << "/* message */" << '\n';
 
@@ -37,8 +39,9 @@ int main() {
 	while (!game->getResult()) {
 		nodelay(stdscr, TRUE);
 		game->check_button();
+		game->print_map();
 		refresh();
-		usleep()
+//		std::usleep();
 	}
 
 

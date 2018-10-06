@@ -19,7 +19,14 @@ Game::Game(void) {
 	this->_result = 0;
 	this->_score = 0;
 	this->_pause = 0;
-
+	this->_liveEnemies = 42;
+	for (int i = 0; i < HEIGHT; i++) {
+		for (int j = 0; j < WIDTH; j++) {
+			this->_map[i][j] = ' ';
+		}
+	}
+	this->_hero = Good(std::rand() % 66, 1);
+	this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
 	return;
 }
 
@@ -40,6 +47,25 @@ Game &Game::operator=(Game const &src) {
 }
 
 Game::~Game(void) {
+
+	return;
+}
+
+void Game::print_map(void) {
+
+	for (int i = 0; i < HEIGHT; i++) {
+		for (int j = 0; j < WIDTH; j++) {
+			mvaddch(i + 8, j + 1, this->_map[i][j]);
+		}
+	}
+
+	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+		if (i < this->_liveEnemies) {
+			mvaddch(25 + i / 6, 214 + i % 6 + i % 6 * 3, '^');
+		} else {
+			mvaddch(25 + i / 6, 214 + i % 6, ' ');
+		}
+	}
 
 	return;
 }
@@ -100,6 +126,7 @@ void Game::print_template(void) const {
 	mvprintw(3, 111, "%s", "┌┐ ┬ ┬");
 	mvprintw(4, 111, "%s", "├┴┐└┬┘");
 	mvprintw(5, 111, "%s", "└─┘ ┴ ");
+	mvaddstr(23, 213, "-=== Enemies left: ===-");
 	attron(COLOR_PAIR(4) | A_BOLD);
 	mvaddstr(3, 129, "┌─┐┌┬┐┬ ┬┌─┐┌─┐┬  ┬ ┬┬┌─     ┬     ┬┌┬┐┬┬┌─┐┬  ┬┌─┐┬┌─");
 	mvaddstr(4, 129, "├┤  │ │ ││ ┬│ ││  │ │├┴┐    ┌┼─    │ │ ││├┤ └┐┌┘└─┐├┴┐");
@@ -190,6 +217,30 @@ void Game::sighandler(int signum) {
 
 void Game::check_button(void) {
 
+	keypad(stdscr, true);
+	int ch;
+
+	if ((ch = getch()) == KEY_RIGHT && this->_hero.getY() + 1 < WIDTH) {
+		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+		this->_hero.setY(this->_hero.getY() + 1);
+		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		ch = '\0';
+	} else if (ch == KEY_LEFT && this->_hero.getY() - 1 >= 0) {
+		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+		this->_hero.setY(this->_hero.getY() - 1);
+		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		ch = '\0';
+	} else if (ch == KEY_UP && this->_hero.getX() - 1 >= 0) {
+		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+		this->_hero.setX(this->_hero.getX() - 1);
+		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		ch = '\0';
+	} else if (ch == KEY_DOWN && this->_hero.getX() + 1 < HEIGHT) {
+		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+		this->_hero.setX(this->_hero.getX() + 1);
+		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		ch = '\0';
+	}
 
 	return;
 }

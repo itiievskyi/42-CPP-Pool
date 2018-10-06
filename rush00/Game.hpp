@@ -16,8 +16,14 @@
 # define COLOR_GREY 8
 # define HELP_LINES 30
 # define HELP_COLS 103
+# define NUM_OF_ENEMIES 42
+# define HEIGHT 66
+# define WIDTH 197
 
 # include <iostream>
+# include "SpaceShip.hpp"
+# include "Enemy.hpp"
+# include "Good.hpp"
 
 class Game {
 
@@ -33,7 +39,8 @@ public:
 */
 	void init_colors(void) const;
 	void print_template(void) const;
-	void check_pause(void);
+	void check_button(void);
+	void print_map(void);
 	static void sighandler(int signum);
 
 /*
@@ -56,7 +63,10 @@ private:
 	int			_result;
 	int			_score;
 	int			_pause;
-	
+	int			_liveEnemies;
+	char		_map[HEIGHT][WIDTH];
+//	Enemy		*enemies[NUM_OF_ENEMIES];
+	Good		_hero;
 
 };
 
