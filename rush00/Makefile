@@ -22,7 +22,9 @@ DIR_O = obj
 
 SOURCES =	main.cpp \
 			Game.cpp \
-
+			SpaceShip.cpp \
+			Enemy.cpp \
+			Good.cpp \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

@@ -56,6 +56,7 @@ private:
 	int			_result;
 	int			_score;
 	int			_pause;
+	
 
 };
 
