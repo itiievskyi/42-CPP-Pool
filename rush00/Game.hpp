@@ -17,7 +17,7 @@
 # define HELP_LINES 30
 # define HELP_COLS 103
 # define NUM_OF_ENEMIES 42
-# define HEIGHT 66
+# define HEIGHT 60
 # define WIDTH 197
 
 # include <iostream>

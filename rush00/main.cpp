@@ -62,5 +62,7 @@ int main() {
 		std::system("clear");
 	}
 
+	std::system("leaks ft_retro > leaks.log");
+
 	return 0;
 }

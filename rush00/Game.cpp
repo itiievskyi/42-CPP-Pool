@@ -14,6 +14,10 @@
 #include <ncurses.h>
 #include <panel.h>
 #include <unistd.h>
+#include <string>
+
+
+#include <stdio.h>
 
 Game::Game(void) {
 
@@ -35,7 +39,7 @@ Game::Game(void) {
 		int unique = 0;
 		while (unique < NUM_OF_ENEMIES) {
 			unique = 0;
-			position = std::rand() % 65 + 1;
+			position = std::rand() % 59 + 1;
 			for (int j = 0; j < NUM_OF_ENEMIES; j++) {
 				if (position != this->_enemies[j]->getX()) {
 					unique++;
@@ -48,7 +52,7 @@ Game::Game(void) {
 	this->_respawnDelay = 10;
 	this->_cycle = 0;
 	this->_timeBonus = 10000;
-	this->_hero = Good(std::rand() % 66, 1);
+	this->_hero = Good(std::rand() % 60, 1);
 	this->_boss = Boss(std::rand() % 20 + 20, 195);
 	this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
 	return;
@@ -347,10 +351,10 @@ void Game::print_map(void) {
 		for (int j = 0; j < WIDTH; j++) {
 			if (this->_map[i][j] == '>' && this->_hero.getInjure() % 2 == 1) {
 				attron(COLOR_PAIR(5));
-				mvaddch(i + 8, j + 1, this->_map[i][j]);
+				mvaddch(i + 11, j + 1, this->_map[i][j]);
 				attroff(COLOR_PAIR(6));
 			} else {
-				mvaddch(i + 8, j + 1, this->_map[i][j]);
+				mvaddch(i + 11, j + 1, this->_map[i][j]);
 			}
 		}
 	}
@@ -362,6 +366,30 @@ void Game::print_map(void) {
 			mvaddch(25 + i / 6, 214 + i % 6 + i % 6 * 3, ' ');
 		}
 	}
+
+	if (this->_cycle % 30 == 0) {
+		static int count = 0;
+
+		const wchar_t patternA[21] = L".･:*:･ﾟ’✫,’✫’ﾟ･:*:･˙";
+		const wchar_t patternB[21] = L":*:･ﾟ’✫,’✫’ﾟ･:*:･˙.･";
+		const wchar_t patternC[21] = L":･ﾟ’✫,’✫’ﾟ･:*:･˙.･:*";
+
+		attron(COLOR_PAIR(2) | A_BOLD);
+		int n = count;
+		for (int i = 0; i < 197; i++) {
+			mvprintw(8, i + 1, "%C", patternA[n % 21]);
+			mvprintw(9, i + 1, "%C", patternB[n % 21]);
+			mvprintw(10, i + 1, "%C", patternC[n % 21]);
+			mvprintw(8 + 63, i + 1, "%C", patternC[n % 21]);
+			mvprintw(9 + 63, i + 1, "%C", patternB[n % 21]);
+			mvprintw(10 + 63, i + 1, "%C", patternA[n % 21]);
+			n++;
+		}
+		attroff(COLOR_PAIR(2) | A_BOLD);
+
+		++count;
+	}
+
 	attron(COLOR_PAIR(4) | A_BOLD);
 	mvprintw(9, 230, "%03d", this->_hero.getHP());
 	mvprintw(11, 228, "%06d", this->_score);
@@ -501,6 +529,24 @@ void Game::print_template(void) const {
 	mvaddstr(67, 202, "Be careful but brave! Empire will proud of you!");
 	attroff(COLOR_PAIR(8) | A_BOLD);
 
+	int count = 0;
+
+	const wchar_t patternA[21] = L".･:*:･ﾟ’✫,’✫’ﾟ･:*:･˙";
+	const wchar_t patternB[21] = L":*:･ﾟ’✫,’✫’ﾟ･:*:･˙.･";
+	const wchar_t patternC[21] = L":･ﾟ’✫,’✫’ﾟ･:*:･˙.･:*";
+
+	attron(COLOR_PAIR(2) | A_BOLD);
+	int n = count;
+	for (int i = 0; i < 197; i++) {
+		mvprintw(8, i + 1, "%C", patternA[n % 21]);
+		mvprintw(9, i + 1, "%C", patternB[n % 21]);
+		mvprintw(10, i + 1, "%C", patternC[n % 21]);
+		mvprintw(8 + 63, i + 1, "%C", patternC[n % 21]);
+		mvprintw(9 + 63, i + 1, "%C", patternB[n % 21]);
+		mvprintw(10 + 63, i + 1, "%C", patternA[n % 21]);
+		n++;
+	}
+	attroff(COLOR_PAIR(2) | A_BOLD);
 	return;
 }
 
