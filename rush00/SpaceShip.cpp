@@ -6,6 +6,8 @@ SpaceShip::SpaceShip() {}
 SpaceShip::SpaceShip(int x, int y) : x(x), y(y) {
 
 	this->_bullet = nullptr;
+	this->_bulletM = nullptr;
+	this->_bulletB = nullptr;
 	this->_activeAttack = false;
 	this->_status = 0;
 
@@ -46,10 +48,22 @@ bool  SpaceShip::getActiveAttack() const {
 
 	return this->_activeAttack;
 }
+
 Bullet *SpaceShip::getBullet() const {
 
 	return this->_bullet;
 }
+
+Bullet *SpaceShip::getBulletM() const {
+
+	return this->_bulletM;
+}
+
+Bullet *SpaceShip::getBulletB() const {
+
+	return this->_bulletB;
+}
+
 void SpaceShip::setActiveAttack(bool act) {
 
 	this->_activeAttack = act;
@@ -81,12 +95,16 @@ int  SpaceShip::getHP() const {
 
 void SpaceShip::takeDamage(int damage) {
 
-	if (this->_hp > 0 && damage > 0) {
-		if (damage >= this->_hp) {
-			this->_hp = 0;
-		} else {
-			this->_hp -= damage;
-		}
+	if (this->_hp > 0) {
+		this->_hp -= damage;
+	}
+
+	if (this->_hp < 0) {
+		this->_hp = 0;
+	}
+
+	if (this->_hp == 0) {
+		this->_status = -1;
 	}
 
 	return;
@@ -97,4 +115,17 @@ void  SpaceShip::setHP(int hp) {
 	this->_hp = hp;
 
 	return;
+}
+
+void  SpaceShip::setInjure(int inj) {
+
+	this->_injure = inj;
+
+	return;
+}
+
+
+int  SpaceShip::getInjure() const {
+
+	return this->_injure;
 }

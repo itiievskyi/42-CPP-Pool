@@ -13,6 +13,7 @@
 #include "Game.hpp"
 #include <ncurses.h>
 #include <panel.h>
+#include <unistd.h>
 
 Game::Game(void) {
 
@@ -48,6 +49,7 @@ Game::Game(void) {
 	this->_cycle = 0;
 	this->_timeBonus = 10000;
 	this->_hero = Good(std::rand() % 66, 1);
+	this->_boss = Boss(std::rand() % 20 + 20, 195);
 	this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
 	return;
 }
@@ -74,10 +76,10 @@ Game::~Game(void) {
 }
 
 void Game::findShip(int x, int y) {
-x = 0;
+	x = 0;
+	this->_liveEnemies -= 1;
 	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
 		if (this->_enemies[i]->getStatus() == 1 && this->_enemies[i]->getY() == y) {
-			this->_liveEnemies -= 1;
 			this->_score += 100;
 			this->_hero.setHP(this->_hero.getHP() + 1);
 			this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = ' ';
@@ -86,23 +88,57 @@ x = 0;
 		}
 	}
 }
-/*
-void Game::findBullet(int x, int y) {
 
-x = 0;
-	t_bullet	*temp = this->_bulletList;
+bool Game::finish_game(void) {
 
-	while (temp && temp->next != nullptr) {
-		if ( temp->next->bullet->getY() == y && temp->next->bullet->getBad() == true) {
-			this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+	char ch = '\0';
 
-			temp->next = temp->next->next;
-		}
-		temp = temp->next;
+	attron(COLOR_PAIR(3));
+	mvaddstr(35 + 1 + 1, 211, "Your final score is: ");
+	attroff(COLOR_PAIR(3));
+	attron(COLOR_PAIR(2));
+	mvprintw(35 + 1 + 1, 232, "%06d",
+	this->_result == 1 ? this->_score + this->_timeBonus : this->_score);
+	attroff(COLOR_PAIR(2));
+
+	if (this->_result == 1) {
+		attron(COLOR_PAIR(4));
+		mvaddstr(35 + 1 + 4, 205 + 7, " ##      ## #### ##    ## ");
+		mvaddstr(35 + 1 + 5, 205 + 7, " ##  ##  ##  ##  ###   ## ");
+		mvaddstr(35 + 1 + 6, 205 + 7, " ##  ##  ##  ##  ####  ## ");
+		mvaddstr(35 + 1 + 7, 205 + 7, " ##  ##  ##  ##  ## ## ## ");
+		mvaddstr(35 + 1 + 8, 205 + 7, " ##  ##  ##  ##  ##  #### ");
+		mvaddstr(35 + 1 + 9, 205 + 7, " ##  ##  ##  ##  ##   ### ");
+		mvaddstr(35 + 1 + 10, 205 + 7, "  ###  ###  #### ##    ## ");
+		attroff(COLOR_PAIR(4));
+		refresh();
+	} else {
+		attron(COLOR_PAIR(5));
+		mvaddstr(35 + 1 + 4, 205, "▓█████▄ ▓█████ ▄▄▄     ▄▄▄█████▓ ██░ ██ ");
+		mvaddstr(35 + 1 + 5, 205, "▒██▀ ██▌▓█   ▀▒████▄   ▓  ██▒ ▓▒▓██░ ██▒");
+		mvaddstr(35 + 1 + 6, 205, "░██   █▌▒███  ▒██  ▀█▄ ▒ ▓██░ ▒░▒██▀▀██░");
+		mvaddstr(35 + 1 + 7, 205, "░▓█▄   ▌▒▓█  ▄░██▄▄▄▄██░ ▓██▓ ░ ░▓█ ░██ ");
+		mvaddstr(35 + 1 + 8, 205, "░▒████▓ ░▒████▒▓█   ▓██▒ ▒██▒ ░ ░▓█▒░██▓");
+		mvaddstr(35 + 1 + 9, 205, " ▒▒▓  ▒ ░░ ▒░ ░▒▒   ▓▒█░ ▒ ░░    ▒ ░░▒░▒");
+		mvaddstr(35 + 1 + 10, 205, " ░ ▒  ▒  ░ ░  ░ ▒   ▒▒ ░   ░     ▒ ░▒░ ░");
+		attroff(COLOR_PAIR(5));
+		refresh();
 	}
 
+	while (ch != 'q' && ch != 'r') {
+		attron(COLOR_PAIR(7) | A_BOLD);
+		mvaddstr(61, 202, "Press 'q' to quit the game or 'r' to retry   ");
+		attron(COLOR_PAIR(5) | A_BOLD);
+		mvaddstr(59, 202, "The game is over...    ");
+		ch = getch();
+	}
+
+	if (ch == 'r') {
+		return true;
+	}
+
+	return false;
 }
-*/
 
 void Game::manage_bullets() {
 
@@ -111,10 +147,19 @@ void Game::manage_bullets() {
 		this->_hero.setActiveAttack(false);
 	}
 
-	for (int i = 0; i < NUM_OF_ENEMIES; i++) {
-		if (this->_enemies[i]->getActiveAttack() == true) {
-			this->pushBullet(this->_enemies[i]->getBullet());
-			this->_enemies[i]->setActiveAttack(false);
+	if (this->_liveEnemies > 0) {
+		for (int i = 0; i < NUM_OF_ENEMIES; i++) {
+			if (this->_enemies[i]->getActiveAttack() == true) {
+				this->pushBullet(this->_enemies[i]->getBullet());
+				this->_enemies[i]->setActiveAttack(false);
+			}
+		}
+	} else if (this->_boss.getStatus() == 1) {
+		if (this->_boss.getActiveAttack() == true) {
+			this->pushBullet(this->_boss.getBullet());
+			this->pushBullet(this->_boss.getBulletM());
+			this->pushBullet(this->_boss.getBulletB());
+			this->_boss.setActiveAttack(false);
 		}
 	}
 
@@ -125,10 +170,17 @@ void Game::manage_bullets() {
 			if (temp->next->bullet->getX() + 2 > WIDTH) {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				temp->next = temp->next->next;
-			} else if (this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() + 1] == '<') {
+			} else if (this->_boss.getStatus() == 0 && this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() + 1] == '<') {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				this->findShip(temp->next->bullet->getY(), temp->next->bullet->getX() + 1);
 				temp->next = temp->next->next;
+			} else if (
+				this->_boss.getStatus() == 1 && (
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() + 1] == '[' ||
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() + 1] == '<')) {
+					this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+					this->_boss.setHP(this->_boss.getHP() - 25);
+					temp->next = temp->next->next;
 			} else {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				temp->next->bullet->setX(temp->next->bullet->getX() + 1);
@@ -138,6 +190,7 @@ void Game::manage_bullets() {
 			if (this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() - 1] == '>') {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				this->_hero.takeDamage(temp->next->bullet->getDamage());
+				this->_hero.setInjure(this->_hero.getInjure() + 30);
 				temp->next = temp->next->next;
 			}
 			if (temp->next->bullet->getX() - 2 < 0) {
@@ -157,27 +210,95 @@ void	Game::updatePlayers() {
 
 	static int count = 0;
 
-	if (this->_cycle % 100 == 50 && count < NUM_OF_ENEMIES) {
+	if (this->_liveEnemies > 0 && this->_cycle % 100 == 50 && count < NUM_OF_ENEMIES) {
 
 		this->_enemies[count]->setStatus(1);
 
 		++count;
 	}
 
-	if (this->_cycle % 10 == 0) {
+	if (this->_liveEnemies > 0 && this->_cycle % 10 == 0) {
 		for (int i = 0; i < NUM_OF_ENEMIES; i++) {
 			if (this->_enemies[i]->getStatus() == 1) {
-				if (this->_enemies[i]->getY() == 0) {
+				if (this->_enemies[i]->getY() == 1) {
 					this->_result = -1;
 				}
-				this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = ' ';
-				this->_enemies[i]->setY(this->_enemies[i]->getY() - 1);
-				this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = '<';
+				if (this->_enemies[i]->getY() - 1 == this->_hero.getY() &&
+					this->_enemies[i]->getX() == this->_hero.getX()){
+					this->_result = -1;
+				} else {
+					this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = ' ';
+					this->_enemies[i]->setY(this->_enemies[i]->getY() - 1);
+					this->_map[this->_enemies[i]->getX()][this->_enemies[i]->getY()] = '<';
+				}
 			}
 		}
 	}
 
-	if (this->_cycle / 100 > 1 && this->_cycle % 100 == 1) {
+	if (this->_boss.getStatus() == 1 && this->_cycle % 100 == 0) {
+		if (this->_boss.getY() == 1) {
+			this->_result = -1;
+		}
+		if (this->_boss.getY() - 1 == this->_hero.getY() &&
+			(this->_boss.getX() + 0 == this->_hero.getX() ||
+			this->_boss.getX() + 1 == this->_hero.getX() ||
+			this->_boss.getX() + 2 == this->_hero.getX() ||
+			this->_boss.getX() + 3 == this->_hero.getX() ||
+			this->_boss.getX() + 4 == this->_hero.getX())) {
+				this->_result = -1;
+		} else {
+			for (int i = 0; i < 5; i++) {
+				this->_map[this->_boss.getX() + i][this->_boss.getY() + 1] = ' ';
+			}
+			this->_boss.move('<');
+			for (int i = 0; i < 5; i++) {
+				for (int j = 0; j < 2; j++) {
+					this->_map[this->_boss.getX() + i][this->_boss.getY() + j]
+					= this->_boss.getBodyPiece(i, j);
+				}
+			}
+		}
+	} else if (this->_boss.getStatus() == 1 && this->_cycle % 50 == 0) {
+		int dir = std::rand() % 2;
+		if (dir == 0 && this->_boss.getX() - 1 > 1) {
+			if (this->_boss.getX() - 1 == this->_hero.getX() &&
+				(this->_boss.getY() + 0 == this->_hero.getY() ||
+				this->_boss.getY() + 1 == this->_hero.getY())) {
+					this->_result = -1;
+			} else {
+				for (int i = 0; i < 2; i++) {
+					this->_map[this->_boss.getX() + 4][this->_boss.getY() + i] = ' ';
+				}
+				this->_boss.move('^');
+				for (int i = 0; i < 5; i++) {
+					for (int j = 0; j < 2; j++) {
+						this->_map[this->_boss.getX() + i][this->_boss.getY() + j]
+						= this->_boss.getBodyPiece(i, j);
+					}
+				}
+			}
+		} else if (dir == 1 && this->_boss.getX() + 5 < HEIGHT) {
+			if (this->_boss.getX() + 1 == this->_hero.getX() &&
+				(this->_boss.getY() + 0 == this->_hero.getY() ||
+				this->_boss.getY() + 1 == this->_hero.getY())) {
+					this->_result = -1;
+			} else {
+				for (int i = 0; i < 2; i++) {
+					this->_map[this->_boss.getX()][this->_boss.getY() + i] = ' ';
+				}
+				this->_boss.move('V');
+				for (int i = 0; i < 5; i++) {
+					for (int j = 0; j < 2; j++) {
+						this->_map[this->_boss.getX() + i][this->_boss.getY() + j]
+						= this->_boss.getBodyPiece(i, j);
+					}
+				}
+			}
+		}
+
+	}
+
+	if (this->_liveEnemies > 0 && this->_cycle / 100 > 1 && this->_cycle % 100 == 1) {
 		int position = 0;
 		int active = 0;
 		while (active != 1) {
@@ -189,8 +310,28 @@ void	Game::updatePlayers() {
 		this->_enemies[position]->attack();
 	}
 
+	if (this->_boss.getStatus() == 1 && this->_cycle % 100 == 1) {
+		this->_boss.attack();
+	}
+
 	if (this->_hero.getHP() == 0) {
 		this->_result = -1;
+	}
+
+	if (this->_hero.getInjure() > 0 && this->_cycle % 10 == 1) {
+		this->_hero.setInjure(this->_hero.getInjure() - 1);
+	}
+
+	if (this->_liveEnemies == 0) {
+		this->_boss.setStatus(1);
+	}
+
+	if (this->_boss.getHP() == 0) {
+		this->_boss.setStatus(-1);
+	}
+
+	if (this->_boss.getStatus() == -1) {
+		this->_result = 1;
 	}
 
 	return;
@@ -204,7 +345,13 @@ void Game::print_map(void) {
 
 	for (int i = 0; i < HEIGHT; i++) {
 		for (int j = 0; j < WIDTH; j++) {
-			mvaddch(i + 8, j + 1, this->_map[i][j]);
+			if (this->_map[i][j] == '>' && this->_hero.getInjure() % 2 == 1) {
+				attron(COLOR_PAIR(5));
+				mvaddch(i + 8, j + 1, this->_map[i][j]);
+				attroff(COLOR_PAIR(6));
+			} else {
+				mvaddch(i + 8, j + 1, this->_map[i][j]);
+			}
 		}
 	}
 
@@ -236,6 +383,22 @@ void Game::print_map(void) {
 
 	attroff(COLOR_PAIR(4) | A_BOLD);
 
+	if (this->_liveEnemies == 0) {
+		attron(COLOR_PAIR(3) | A_BOLD);
+		mvaddstr(23, 213, "-===== Boss HP: =====-");
+		attroff(COLOR_PAIR(3) | A_BOLD);
+		int hpBlocks = this->_boss.getHP() / 25;
+		attron(COLOR_PAIR(5) | A_BOLD);
+		for (int i = 0; i < 40; i++) {
+			if (i < hpBlocks) {
+				mvprintw(25 + i / 20, 215 + i % 20, "▒");
+			} else {
+				mvprintw(25 + i / 20, 215 + i % 20, " ");
+			}
+		}
+		attroff(COLOR_PAIR(5) | A_BOLD);
+	}
+
 	prev_time = duration;
 	return;
 }
@@ -259,6 +422,13 @@ void Game::print_template(void) const {
 
 	int x = 0;
 	int y = 0;
+
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < 250; j++) {
+			mvaddch(i, j, ' ');
+		}
+	}
+	refresh();
 
 	attron(COLOR_PAIR(1) | A_BOLD);
 	while (x < 252)
@@ -307,16 +477,16 @@ void Game::print_template(void) const {
 	mvaddstr(4, 129, "├┤  │ │ ││ ┬│ ││  │ │├┴┐    ┌┼─    │ │ ││├┤ └┐┌┘└─┐├┴┐");
 	mvaddstr(5, 129, "└─┘ ┴ └─┘└─┘└─┘┴─┘└─┘┴ ┴    └┘     ┴ ┴ ┴┴└─┘ └┘ └─┘┴ ┴");
 	attron(COLOR_PAIR(5) | A_BOLD);
-	mvaddstr(1, 207, " _     _____ ____ _____ _   _ ____  ");
-	mvaddstr(2, 207, "| |   | ____/ ___| ____| \\ | |  _ \\ ");
-	mvaddstr(3, 207, "| |   |  _|| |  _|  _| |  \\| | | | |");
-	mvaddstr(4, 207, "| |___| |__| |_| | |___| |\\  | |_| |");
-	mvaddstr(5, 207, "|_____|_____\\____|_____|_| \\_|____/ ");
-	mvaddstr(1 + 50, 207 + 5, " _   _ _____ _     ____  ");
-	mvaddstr(2 + 50, 207 + 5, "| | | | ____| |   |  _ \\ ");
-	mvaddstr(3 + 50, 207 + 5, "| |_| |  _| | |   | |_) |");
-	mvaddstr(4 + 50, 207 + 5, "|  _  | |___| |___|  __/ ");
-	mvaddstr(5 + 50, 207 + 5, "|_| |_|_____|_____|_|    ");
+	mvaddstr(1, 210, "  ____ _____  _  _____ ____  ");
+	mvaddstr(2, 210, " / ___|_   _|/ \\|_   _/ ___| ");
+	mvaddstr(3, 210, " \\___ \\ | | / _ \\ | | \\___ \\ ");
+	mvaddstr(4, 210, "  ___) || |/ ___ \\| |  ___) |");
+	mvaddstr(5, 210, " |____/ |_/_/   \\_\\_| |____/ ");
+	mvaddstr(1 + 50, 206, "  _   _  _____        __  _____ ___  ");
+	mvaddstr(2 + 50, 206, " | | | |/ _ \\ \\      / / |_   _/ _ \\ ");
+	mvaddstr(3 + 50, 206, " | |_| | | | \\ \\ /\\ / /    | || | | |");
+	mvaddstr(4 + 50, 206, " |  _  | |_| |\\ V  V /     | || |_| |");
+	mvaddstr(5 + 50, 206, " |_| |_|\\___/  \\_/\\_/      |_| \\___/ ");
 	mvaddstr(69, 202, "Press Q to see the exit menu");
 	attroff(COLOR_PAIR(5) | A_BOLD);
 	attroff(COLOR_PAIR(3) | A_BOLD);
@@ -410,24 +580,40 @@ void Game::check_button(void) {
 	int ch;
 
 	if ((ch = getch()) == KEY_RIGHT && this->_hero.getY() + 1 < WIDTH) {
-		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
-		this->_hero.setY(this->_hero.getY() + 1);
-		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		if (this->_map[this->_hero.getX()][this->_hero.getY() + 1] != ' ') {
+			this->_result = -1;
+		} else {
+			this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+			this->_hero.setY(this->_hero.getY() + 1);
+			this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		}
 		ch = '\0';
 	} else if (ch == KEY_LEFT && this->_hero.getY() - 1 >= 0) {
-		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
-		this->_hero.setY(this->_hero.getY() - 1);
-		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		if (this->_map[this->_hero.getX()][this->_hero.getY() - 1] != ' ') {
+			this->_result = -1;
+		} else {
+			this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+			this->_hero.setY(this->_hero.getY() - 1);
+			this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		}
 		ch = '\0';
 	} else if (ch == KEY_UP && this->_hero.getX() - 1 >= 0) {
-		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
-		this->_hero.setX(this->_hero.getX() - 1);
-		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		if (this->_map[this->_hero.getX() - 1][this->_hero.getY()] != ' ') {
+			this->_result = -1;
+		} else {
+			this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+			this->_hero.setX(this->_hero.getX() - 1);
+			this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		}
 		ch = '\0';
 	} else if (ch == KEY_DOWN && this->_hero.getX() + 1 < HEIGHT) {
-		this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
-		this->_hero.setX(this->_hero.getX() + 1);
-		this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		if (this->_map[this->_hero.getX() + 1][this->_hero.getY()] != ' ') {
+			this->_result = -1;
+		} else {
+			this->_map[this->_hero.getX()][this->_hero.getY()] = ' ';
+			this->_hero.setX(this->_hero.getX() + 1);
+			this->_map[this->_hero.getX()][this->_hero.getY()] = '>';
+		}
 		ch = '\0';
 	} else if (ch == ' ') {
 		this->_hero.attack();

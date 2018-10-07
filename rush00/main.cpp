@@ -15,6 +15,7 @@
 #include "Enemy.hpp"
 #include "Good.hpp"
 #include "Bullet.hpp"
+#include "Boss.hpp"
 #include <ncurses.h>
 #include <ctime>
 #include <unistd.h>
@@ -25,30 +26,41 @@ int main() {
 	std::srand(std::time(nullptr));
 
 	setlocale(LC_ALL, "en_US.UTF-8");
-	initscr();
-	start_color();
-	curs_set(0);
-	cbreak();
-	noecho();
+
+	bool retry = true;
 
 	Game *game = new Game;
-	game->init_colors();
-	game->print_template();
 
-	while (!game->getResult()) {
-		nodelay(stdscr, TRUE);
-		game->manage_bullets();
-		game->updatePlayers();
-		game->check_button();
-		game->print_map();
+	while (retry) {
+		initscr();
+		start_color();
+		curs_set(0);
+		cbreak();
+		noecho();
+		game->init_colors();
+		game->print_template();
+
+		while (!game->getResult()) {
+			nodelay(stdscr, TRUE);
+			game->manage_bullets();
+			game->updatePlayers();
+			game->check_button();
+			game->print_map();
+			refresh();
+			usleep(15000);
+		}
 		refresh();
-		usleep(15000);
+		retry = game->finish_game();
+		refresh();
+		if (retry) {
+			Game *temp = game;
+			game = new Game();
+			delete temp;
+		}
+		refresh();
+		endwin();
+		std::system("clear");
 	}
-
-
-	endwin();
-
-//	print_template(0, 0, crwr);
 
 	return 0;
 }

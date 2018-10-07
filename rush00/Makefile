@@ -26,6 +26,7 @@ SOURCES =	main.cpp \
 			Enemy.cpp \
 			Good.cpp \
 			Bullet.cpp \
+			Boss.cpp \
 
 SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 

@@ -25,6 +25,7 @@
 # include "Enemy.hpp"
 # include "Good.hpp"
 # include "Bullet.hpp"
+# include "Boss.hpp"
 
 class Game {
 
@@ -41,7 +42,6 @@ public:
 	void init_colors(void) const;
 	void print_template(void) const;
 	void check_button(void);
-	void updatePlayers(void);
 	void print_map(void);
 	void menuHandler(void);
 
@@ -53,7 +53,8 @@ public:
 	void pushBullet(Bullet *);
 	void findShip(int y, int x);
 	void findBullet(int y, int x);
-
+	void updatePlayers(void);
+	bool finish_game(void);
 /*
 **	Getters & Setters
 */
@@ -83,6 +84,7 @@ private:
 	int			_timeBonus;
 
 	Enemy		*_enemies[NUM_OF_ENEMIES];
+	Boss		_boss;
 	Good		_hero;
 	t_bullet	*_bulletList;
 
