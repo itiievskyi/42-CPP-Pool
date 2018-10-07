@@ -16,15 +16,14 @@
 #include "Good.hpp"
 #include "Bullet.hpp"
 #include <ncurses.h>
-#include <csignal>
 #include <ctime>
 #include <unistd.h>
+#include <cstdio>
 
 int main() {
 
 	std::srand(std::time(nullptr));
 
-	std::signal(SIGINT, Game::sighandler);
 	setlocale(LC_ALL, "en_US.UTF-8");
 	initscr();
 	start_color();

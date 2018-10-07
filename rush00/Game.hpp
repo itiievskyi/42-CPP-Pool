@@ -43,7 +43,7 @@ public:
 	void check_button(void);
 	void updatePlayers(void);
 	void print_map(void);
-	static void sighandler(int signum);
+	void menuHandler(void);
 
 /*
 **	Game functions
@@ -79,6 +79,9 @@ private:
 	int			_respawnDelay;
 	int			_cycle;
 	char		_map[HEIGHT][WIDTH];
+	std::time_t _start;
+	int			_timeBonus;
+
 	Enemy		*_enemies[NUM_OF_ENEMIES];
 	Good		_hero;
 	t_bullet	*_bulletList;

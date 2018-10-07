@@ -91,3 +91,10 @@ void SpaceShip::takeDamage(int damage) {
 
 	return;
 }
+
+void  SpaceShip::setHP(int hp) {
+
+	this->_hp = hp;
+
+	return;
+}

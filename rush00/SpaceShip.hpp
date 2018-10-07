@@ -33,6 +33,7 @@ public:
 	void setBullet(Bullet*);
 	void setStatus(int status);
 	int  getHP() const;
+	void setHP(int);
 	void takeDamage(int damage);
 
 	virtual void attack() = 0;
