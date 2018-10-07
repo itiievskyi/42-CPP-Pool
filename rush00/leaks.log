@@ -1,13 +1,13 @@
-Process:         ft_retro [8491]
-Path:            /Users/itiievsk/work/cpp_pool/rush00/ft_retro
-Load Address:    0x1071b0000
+Process:         ft_retro [51559]
+Path:            /Users/etugoluk/Desktop/rush00/rush00/ft_retro
+Load Address:    0x1023f5000
 Identifier:      ft_retro
 Version:         ???
 Code Type:       X86-64
-Parent Process:  zsh [64313]
+Parent Process:  zsh [50257]
 
-Date/Time:       2018-10-07 17:32:59.246 +0300
-Launch Time:     2018-10-07 17:32:48.061 +0300
+Date/Time:       2018-10-07 17:58:06.588 +0300
+Launch Time:     2018-10-07 17:56:59.073 +0300
 OS Version:      Mac OS X 10.13.3 (17D47)
 Report Version:  7
 Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
@@ -15,12 +15,5 @@ Analysis Tool Version:  Xcode 9.2 (9C40b)
 ----
 
 leaks Report Version:  2.0
-Process 8491: 741 nodes malloced for 1923 KB
-Process 8491: 3 leaks for 64 total leaked bytes.
-Leak: 0x7fb225c02910  size=16  zone: DefaultMallocZone_0x1071c0000
-	0x25e02470 0x00007fb2 0x25c02920 0x00007fb2 	p$.%.... ).%....
-Leak: 0x7fb225e02440  size=32  zone: DefaultMallocZone_0x1071c0000
-	0x0000001d 0x00000036 0x0000012a 0x00000005 	....6...*.......
-	0x0000001e 0x00000000 0x00000000 0x00000000 	................
-Leak: 0x7fb225e02460  size=16  zone: DefaultMallocZone_0x1071c0000
-	0x25e02440 0x00007fb2 0x25c02910 0x00007fb2 	@$.%.....).%....
+Process 51559: 739 nodes malloced for 2078 KB
+Process 51559: 0 leaks for 0 total leaked bytes.
