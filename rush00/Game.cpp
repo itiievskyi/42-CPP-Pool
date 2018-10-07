@@ -76,6 +76,19 @@ Game &Game::operator=(Game const &src) {
 
 Game::~Game(void) {
 
+	t_bullet	*tmp = _bulletList;
+
+	while (_bulletList)
+	{
+		tmp = _bulletList;
+		_bulletList = _bulletList->next;
+		delete tmp->bullet;
+		delete tmp;
+	}
+	// for (int i = 0; i < NUM_OF_ENEMIES; ++i)
+	// {
+	// 	delete _enemies[i];
+	// }
 	return;
 }
 
@@ -93,7 +106,7 @@ void Game::findShip(int x, int y) {
 	}
 }
 
-bool Game::finish_game(void) {
+void Game::finish_game(void) {
 
 	char ch = '\0';
 
@@ -129,19 +142,14 @@ bool Game::finish_game(void) {
 		refresh();
 	}
 
-	while (ch != 'q' && ch != 'r') {
+	while (ch != 'q') {
 		attron(COLOR_PAIR(7) | A_BOLD);
-		mvaddstr(61, 202, "Press 'q' to quit the game or 'r' to retry   ");
+		mvaddstr(61, 202, "Press 'q' to quit the game");
 		attron(COLOR_PAIR(5) | A_BOLD);
 		mvaddstr(59, 202, "The game is over...    ");
 		ch = getch();
 	}
 
-	if (ch == 'r') {
-		return true;
-	}
-
-	return false;
 }
 
 void Game::manage_bullets() {

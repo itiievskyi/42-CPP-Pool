@@ -54,7 +54,7 @@ public:
 	void findShip(int y, int x);
 	void findBullet(int y, int x);
 	void updatePlayers(void);
-	bool finish_game(void);
+	void finish_game(void);
 /*
 **	Getters & Setters
 */

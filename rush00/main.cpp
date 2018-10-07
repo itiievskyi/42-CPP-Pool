@@ -27,42 +27,32 @@ int main() {
 
 	setlocale(LC_ALL, "en_US.UTF-8");
 
-	bool retry = true;
-
 	Game *game = new Game;
 
-	while (retry) {
-		initscr();
-		start_color();
-		curs_set(0);
-		cbreak();
-		noecho();
-		game->init_colors();
-		game->print_template();
+	initscr();
+	start_color();
+	curs_set(0);
+	cbreak();
+	noecho();
+	game->init_colors();
+	game->print_template();
 
-		while (!game->getResult()) {
-			nodelay(stdscr, TRUE);
-			game->manage_bullets();
-			game->updatePlayers();
-			game->check_button();
-			game->print_map();
-			refresh();
-			usleep(15000);
-		}
+	while (!game->getResult()) {
+		nodelay(stdscr, TRUE);
+		game->manage_bullets();
+		game->updatePlayers();
+		game->check_button();
+		game->print_map();
 		refresh();
-		retry = game->finish_game();
-		refresh();
-		if (retry) {
-			Game *temp = game;
-			game = new Game();
-			delete temp;
-		}
-		refresh();
-		endwin();
-		std::system("clear");
+		usleep(15000);
 	}
+	refresh();
+	game->finish_game();
+	refresh();
+	endwin();
+	std::system("clear");
 
-	std::system("leaks ft_retro > leaks.log");
+	// std::system("leaks ft_retro > leaks.log");
 
 	return 0;
 }
