@@ -1,13 +1,13 @@
-Process:         ft_retro [51559]
+Process:         ft_retro [54403]
 Path:            /Users/etugoluk/Desktop/rush00/rush00/ft_retro
-Load Address:    0x1023f5000
+Load Address:    0x1053de000
 Identifier:      ft_retro
 Version:         ???
 Code Type:       X86-64
 Parent Process:  zsh [50257]
 
-Date/Time:       2018-10-07 17:58:06.588 +0300
-Launch Time:     2018-10-07 17:56:59.073 +0300
+Date/Time:       2018-10-07 18:40:15.525 +0300
+Launch Time:     2018-10-07 18:40:04.074 +0300
 OS Version:      Mac OS X 10.13.3 (17D47)
 Report Version:  7
 Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
@@ -15,5 +15,5 @@ Analysis Tool Version:  Xcode 9.2 (9C40b)
 ----
 
 leaks Report Version:  2.0
-Process 51559: 739 nodes malloced for 2078 KB
-Process 51559: 0 leaks for 0 total leaked bytes.
+Process 54403: 725 nodes malloced for 2078 KB
+Process 54403: 0 leaks for 0 total leaked bytes.

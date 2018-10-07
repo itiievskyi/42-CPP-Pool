@@ -188,6 +188,15 @@ void Game::manage_bullets() {
 				delete tmp;
 				if (!temp->next)
 					break;
+			} else if (this->_boss.getStatus() == 0 && this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() + 2] == '<') {
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
+				this->findShip(temp->next->bullet->getY(), temp->next->bullet->getX() + 2);
+				t_bullet	*tmp = temp->next;
+				temp->next = temp->next->next;
+				delete tmp->bullet;
+				delete tmp;
+				if (!temp->next)
+					break;
 			} else if (
 				this->_boss.getStatus() == 1 && (
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() + 1] == '[' ||
@@ -206,7 +215,8 @@ void Game::manage_bullets() {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = temp->next->bullet->getType();
 			}
 		} else {
-			if (this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() - 1] == '>') {
+			if (this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() - 1] == '>' || 
+				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX() - 2] == '>') {
 				this->_map[temp->next->bullet->getY()][temp->next->bullet->getX()] = ' ';
 				this->_hero.takeDamage(temp->next->bullet->getDamage());
 				this->_hero.setInjure(this->_hero.getInjure() + 30);
@@ -245,7 +255,7 @@ void	Game::updatePlayers() {
 		this->_enemies[count]->setStatus(1);
 		++count;
 	}
-	if (this->_cycle % 4000 == 0)
+	if (this->_cycle % 2000 == 0)
 		koef++;
 	if (this->_liveEnemies > 0 && this->_cycle % (20 / koef) == 0) {
 		for (int i = 0; i < NUM_OF_ENEMIES; i++) {
