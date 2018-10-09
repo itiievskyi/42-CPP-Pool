@@ -66,13 +66,12 @@ Form	*Intern::makeForm(std::string type, std::string target) {
 	for (int i = 0; i < NUM_OF_FUNCS; i++) {
 		if (this->_types[i] == type) {
 			obj = (this->*_funcs[i])(target);
-			std::cout << "Intern creates a " << obj->getName() << " form"
-			<< std::endl;
+			std::cout << "Intern creates a " << *obj;
 			return obj;
 		}
 	}
 
-	std::cout << "Intern can't create a form of the specified type" << std::endl;
+	throw Intern::UknownFormException();
 
 	return nullptr;
 }
