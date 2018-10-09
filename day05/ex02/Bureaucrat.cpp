@@ -85,6 +85,23 @@ void Bureaucrat::signForm(Form &form) {
 	return;
 }
 
+void Bureaucrat::executeForm(Form const &form){
+
+	if (!form.getIsSigned()) {
+		std::cout << this->_name << " cannot execute " << form.getName() <<
+		" because this form is not signed yet." << std::endl;
+	} else if (this->_grade > form.getExecGrade()) {
+		std::cout << this->_name << " cannot execute " << form.getName() <<
+		" because his grade is too low." << std::endl;
+	} else {
+		std::cout << this->_name << " executes " << form.getName() <<
+		"." << std::endl;
+	}
+	form.execute(*this);
+
+	return;
+}
+
 void Bureaucrat::upGrade(void) {
 
 	if (this->_grade - 1 < 1) {

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "Form.hpp"
+#include <string>
 
 Form::Form(std::string const name, int const signGrade, int const execGrade) :
 _name(name), _signGrade(signGrade), _execGrade(execGrade) {
@@ -21,9 +22,25 @@ _name(name), _signGrade(signGrade), _execGrade(execGrade) {
 		throw Form::GradeTooHighException();
 	}
 
+	this->_target = "";
 	this->_isSigned = false;
 
 	return;
+}
+
+Form::Form(std::string const name, std::string target, int const signGrade, int const execGrade) :
+_name(name), _target(target), _signGrade(signGrade), _execGrade(execGrade) {
+
+	if (signGrade > 150 || execGrade > 150) {
+		throw Form::GradeTooLowException();
+	} else if (signGrade < 1 || execGrade < 1) {
+		throw Form::GradeTooHighException();
+	}
+
+	this->_isSigned = false;
+
+	return;
+
 }
 
 Form::Form() : _name("Form"), _signGrade(42), _execGrade(0) {
@@ -60,6 +77,11 @@ std::string Form::getName(void) const {
 	return this->_name;
 }
 
+std::string Form::getTarget(void) const {
+
+	return this->_target;
+}
+
 int Form::getSignGrade(void) const {
 
 	return this->_signGrade;
@@ -86,6 +108,15 @@ void Form::beSigned(Bureaucrat &signer) {
 		throw Form::GradeTooLowException();
 	} else {
 		this->_isSigned = true;
+	}
+}
+
+void Form::execute(Bureaucrat const &executor) const {
+
+	if (!this->_isSigned) {
+		throw Form::FormNotSignedException();
+	} else if (executor.getGrade() > this->_execGrade) {
+		throw Form::GradeTooLowException();
 	}
 }
 
@@ -117,7 +148,7 @@ Form::GradeTooLowException &Form::GradeTooLowException::operator=(const GradeToo
 
 const char    *Form::GradeTooLowException::what() const throw() {
 
-	return "Cannot create or sign the form due to grade incoherence";
+	return "Cannot create, sign or execute the form due to grade incoherence";
 }
 
 // Too high
@@ -151,6 +182,37 @@ const char    *Form::GradeTooHighException::what() const throw() {
 	return "Cannot create or change object of class 'Form': grade is too high (can't be < 1)";
 }
 
+// Not signed
+
+Form::FormNotSignedException::FormNotSignedException(void) {
+
+	return;
+}
+
+Form::FormNotSignedException::FormNotSignedException(const FormNotSignedException &src) {
+
+	*this = src;
+
+	return;
+}
+
+Form::FormNotSignedException::~FormNotSignedException(void) throw() {
+
+	return;
+}
+
+Form::FormNotSignedException  &Form::FormNotSignedException::operator=(const FormNotSignedException &src) {
+
+	static_cast <void> (src);
+
+	return *this;
+}
+
+const char    *Form::FormNotSignedException::what() const throw() {
+
+	return "Form can't be executed until signed";
+}
+
 // << Overloading
 
 std::ostream &operator<<(std::ostream &o, Form const &src) {
@@ -159,9 +221,14 @@ std::ostream &operator<<(std::ostream &o, Form const &src) {
 	src.getSignGrade() << " or higher to be signed and grade "
 	<< src.getExecGrade() << " or higher to be executed. The form is ";
 	if (src.getIsSigned()) {
-		std::cout << "signed." << std::endl;
+		std::cout << "signed.";
 	} else {
-		std::cout << "not signed." << std::endl;
+		std::cout << "not signed.";
+	}
+	if ((src.getTarget()).empty()) {
+		std::cout << " Target is not specified." << std::endl;
+	} else {
+		std::cout << " Target: " << src.getTarget() << "." << std::endl;
 	}
 
 	return o;

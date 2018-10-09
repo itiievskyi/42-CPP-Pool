@@ -12,85 +12,112 @@
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 int main(void) {
 
-	Bureaucrat *bob = NULL;
-	Bureaucrat *jim = NULL;
-	Bureaucrat *mike = NULL;
+	Bureaucrat *bob = new Bureaucrat("Bob", 1);
+	Bureaucrat *jim = new Bureaucrat("Jim", 42);
+	Bureaucrat *mike = new Bureaucrat("Mike", 100);
+
+	std::cout << *bob << *jim << *mike;
+
+	PresidentialPardonForm *president = new PresidentialPardonForm("Killer");
+	RobotomyRequestForm *robot_one = new RobotomyRequestForm("Human");
+	ShrubberyCreationForm *shrubbery = new ShrubberyCreationForm("home");
+
+	std::cout << *president << *robot_one; //<< *shrubbery;
+
+	RobotomyRequestForm *robot_two = robot_one;
+	RobotomyRequestForm *robot_three = new RobotomyRequestForm(*robot_one);
+
+	std::cout << *robot_two << *robot_three;
 
 	try {
-		bob = new Bureaucrat("Bob", 1);
-		jim = new Bureaucrat("Jim", 42);
-		mike = new Bureaucrat("Mike", 100);
-	}
-	catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-	}
-
-	Form *protocol = NULL;
-	Form *blank = NULL;
-	Form *contract = NULL;
-
-	try {
-		protocol = new Form("Protocol", 50, 50);
-		contract = new Form("Contract", 1, 5);
-		blank = new Form("Blank", 99, 151);
-	}
-	catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-	}
-
-	try {
-		blank = new Form("Blank", -1, 1);
+		mike->executeForm(*president);
 	}
 	catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
 
 	try {
-		blank = new Form("Blank", 99, 100);
-	}
-	catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-	}
-
-	std::cout << *protocol;
-
-	jim->signForm(*protocol);
-	bob->signForm(*protocol);
-
-	std::cout << *blank;
-
-	try {
-		mike->signForm(*blank);
-	}
-	catch (std::exception & e) {
-		std::cout << e.what() << std::endl;
-	}
-
-	mike->upGrade();
-
-	try {
-		mike->signForm(*blank);
+		mike->signForm(*president);
 	}
 	catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
 
 	try {
-		bob->signForm(*contract);
+		bob->signForm(*president);
 	}
 	catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
 	}
 
-	std::cout << *blank << *contract << *protocol;
+	try {
+		jim->executeForm(*president);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
 
-	Form *newForm = blank;
-	Form *newestForm = new Form(*blank);
+	try {
+		bob->executeForm(*president);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
 
-	std::cout << *newForm << *newestForm;
+	try {
+		bob->executeForm(*robot_one);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		bob->signForm(*robot_one);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		bob->executeForm(*robot_one);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		bob->executeForm(*robot_two);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		bob->signForm(*shrubbery);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		bob->executeForm(*shrubbery);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		bob->executeForm(*shrubbery);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
 
 	return 0;
 }
