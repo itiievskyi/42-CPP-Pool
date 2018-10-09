@@ -12,9 +12,7 @@
 
 #include "Bureaucrat.hpp"
 
-Bureaucrat::Bureaucrat(const std::string name, int grade) {
-
-	this->_name = name;
+Bureaucrat::Bureaucrat(std::string const name, int grade) : _name(name){
 
 	if (grade > 150) {
 		throw Bureaucrat::GradeTooLowException();
@@ -27,15 +25,14 @@ Bureaucrat::Bureaucrat(const std::string name, int grade) {
 	return;
 }
 
-Bureaucrat::Bureaucrat() {
+Bureaucrat::Bureaucrat() : _name("Bureaucrat") {
 
-	this->_name = "Bureaucrat";
 	this->_grade = 42;
 
 	return;
 }
 
-Bureaucrat::Bureaucrat(Bureaucrat const &src) {
+Bureaucrat::Bureaucrat(Bureaucrat const &src) : _name(src.getName()) {
 
 	*this = src;
 
@@ -45,7 +42,6 @@ Bureaucrat::Bureaucrat(Bureaucrat const &src) {
 Bureaucrat &Bureaucrat::operator=(Bureaucrat const &src) {
 
 	if (this != &src) {
-		this->_name = src.getName();
 		this->_grade = src.getGrade();
 	}
 

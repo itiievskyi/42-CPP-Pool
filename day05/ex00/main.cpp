@@ -67,5 +67,9 @@ int main(void) {
 
 	bob != NULL ? (std::cout << *bob) : 0;
 
+	Bureaucrat *robert = new Bureaucrat(*bob);
+	Bureaucrat *roberta = bob;
+	std::cout << *robert << *roberta;
+
 	return 0;
 }

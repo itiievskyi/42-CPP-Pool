@@ -22,7 +22,7 @@ int main(void) {
 	try {
 		bob = new Bureaucrat("Bob", 1);
 		jim = new Bureaucrat("Jim", 42);
-		mike = new Bureaucrat("Mike", 120);
+		mike = new Bureaucrat("Mike", 100);
 	}
 	catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
@@ -35,7 +35,7 @@ int main(void) {
 	try {
 		protocol = new Form("Protocol", 50, 50);
 		contract = new Form("Contract", 1, 5);
-		blank = new Form("Blank", 100, 151);
+		blank = new Form("Blank", 99, 151);
 	}
 	catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
@@ -49,7 +49,7 @@ int main(void) {
 	}
 
 	try {
-		blank = new Form("Blank", 100, 100);
+		blank = new Form("Blank", 99, 100);
 	}
 	catch (std::exception & e) {
 		std::cout << e.what() << std::endl;
@@ -60,7 +60,37 @@ int main(void) {
 	protocol->beSigned(*jim);
 	protocol->beSigned(*bob);
 
-	std::cout << *protocol;
+	std::cout << *blank;
+
+	try {
+		blank->beSigned(*mike);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	mike->upGrade();
+
+	try {
+		blank->beSigned(*mike);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		contract->beSigned(*bob);
+	}
+	catch (std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << *blank << *contract << *protocol;
+
+	Form *newForm = blank;
+	Form *newestForm = new Form(*blank);
+
+	std::cout << *newForm << *newestForm;
 
 	return 0;
 }

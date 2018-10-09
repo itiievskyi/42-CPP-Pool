@@ -12,38 +12,29 @@
 
 #include "Form.hpp"
 
-Form::Form(const std::string name, int signGrade, int execGrade) {
-
-	this->_name = name;
+Form::Form(std::string const name, int const signGrade, int const execGrade) :
+_name(name), _signGrade(signGrade), _execGrade(execGrade) {
 
 	if (signGrade > 150 || execGrade > 150) {
 		throw Form::GradeTooLowException();
 	} else if (signGrade < 1 || execGrade < 1) {
 		throw Form::GradeTooHighException();
-	} else {
-		this->_signGrade = signGrade;
-		this->_execGrade = execGrade;
 	}
+
 	this->_isSigned = false;
 
 	return;
 }
 
-Form::Form() {
+Form::Form() : _name("Form"), _signGrade(42), _execGrade(0) {
 
-	static int count = 1;
-
-	this->_name = "Form #" + std::to_string(count);
-	this->_signGrade = 42;
-	this->_execGrade = 0;
 	this->_isSigned = false;
-
-	++count;
 
 	return;
 }
 
-Form::Form(Form const &src) {
+Form::Form(Form const &src) : _name(src.getName()),
+_signGrade(src.getSignGrade()), _execGrade(src.getExecGrade()) {
 
 	*this = src;
 
@@ -53,9 +44,6 @@ Form::Form(Form const &src) {
 Form &Form::operator=(Form const &src) {
 
 	if (this != &src) {
-		this->_name = src.getName();
-		this->_signGrade = src.getSignGrade();
-		this->_execGrade = src.getExecGrade();
 		this->_isSigned = src.getIsSigned();
 	}
 

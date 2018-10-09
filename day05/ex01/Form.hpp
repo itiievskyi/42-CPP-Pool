@@ -20,7 +20,7 @@ class Form {
 
 public:
 
-	Form(const std::string name, int signGrade, int execGrade);
+	Form(std::string const name, int const signGrade, int const execGrade);
 	Form(void);
 	Form(Form const &src);
 	~Form(void);
@@ -55,9 +55,9 @@ public:
 
 private:
 
-	std::string			_name;
-	int					_signGrade;
-	int					_execGrade;
+	std::string const	_name;
+	int const			_signGrade;
+	int const			_execGrade;
 	bool				_isSigned;
 };
 
