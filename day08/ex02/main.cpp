@@ -88,5 +88,13 @@ int main(void) {
 	std::cout << "The size of mstack: " <<mstack.size() << std::endl;
 	std::cout << "The size of cloneMstack: " <<cloneMstack.size() << std::endl;
 
+	std::cout << "************** Another in MutantStack ************" << std::endl;
+
+	std::stack<int> s(mstack);
+	std::cout << "The size of stack s (clonned from mstack): " <<s.size() << std::endl;
+
+	MutantStack<int> assignStack = cloneMstack;
+	std::cout << "The size of stack assignStack (assigned form cloneMstack): " <<assignStack.size() << std::endl;
+
 	return 0;
 }
