@@ -22,6 +22,17 @@ int main(void) {
 	Span sp = Span(5);
 
 	try {
+		int span = sp.longestSpan();
+		std::cout << "The longest span is: " << span << std::endl;
+	}
+	catch (Span::IdenticalNumbersException &e) {
+		std::cout << e.what() << std::endl;
+	}
+	catch (Span::TooFewException &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
 		sp.addNumber(5);
 		sp.addNumber(3);
 		sp.addNumber(17);
@@ -46,6 +57,60 @@ int main(void) {
 
 	try {
 		int span = sp.shortestSpan();
+		std::cout << "The shortest span is: " << span << std::endl;
+	}
+	catch (Span::IdenticalNumbersException &e) {
+		std::cout << e.what() << std::endl;
+	}
+	catch (Span::TooFewException &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << "**************************" << std::endl;
+
+	Span smallSpan = Span(2);
+	try {
+		smallSpan.addNumber(5);
+		smallSpan.addNumber(5);
+	}
+	catch (Span::FullStoreException &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		int span = smallSpan.longestSpan();
+		std::cout << "The longest span is: " << span << std::endl;
+	}
+	catch (Span::IdenticalNumbersException &e) {
+		std::cout << e.what() << std::endl;
+	}
+	catch (Span::TooFewException &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	std::cout << "**************************" << std::endl;
+
+	Span bigSpan = Span(20000);
+	try {
+		bigSpan.addRandRange(1000, INT_MAX, 20000);
+	}
+	catch (Span::FullStoreException &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		int span = bigSpan.longestSpan();
+		std::cout << "The longest span is: " << span << std::endl;
+	}
+	catch (Span::IdenticalNumbersException &e) {
+		std::cout << e.what() << std::endl;
+	}
+	catch (Span::TooFewException &e) {
+		std::cout << e.what() << std::endl;
+	}
+
+	try {
+		int span = bigSpan.shortestSpan();
 		std::cout << "The shortest span is: " << span << std::endl;
 	}
 	catch (Span::IdenticalNumbersException &e) {

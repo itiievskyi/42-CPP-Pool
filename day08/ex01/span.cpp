@@ -69,14 +69,28 @@ void Span::addNumber(int num) {
 	}
 }
 
+void Span::addRandRange(int min, int max, int size) {
+
+	for (int i = 0; i < size; i++) {
+		if (this->_actSize == this->_maxSize) {
+			throw Span::FullStoreException();
+		} else {
+			this->_v.push_back(std::rand() % (max - min) + min);
+			++this->_actSize;
+		}
+	}
+}
+
 int Span::longestSpan(void) const {
+
+	if (this->_actSize < 2) {
+		throw Span::TooFewException();
+	}
 
 	double max = *max_element(this->_v.begin(), this->_v.end());
 	double min = *min_element(this->_v.begin(), this->_v.end());
 
-	if (this->_actSize < 2) {
-		throw Span::TooFewException();
-	} else if (min == max) {
+	if (min == max) {
 		throw Span::IdenticalNumbersException();
 	} else {
 		return (max - min);
@@ -85,16 +99,33 @@ int Span::longestSpan(void) const {
 
 int Span::shortestSpan(void) const {
 
+	if (this->_actSize < 2) {
+		throw Span::TooFewException();
+	}
+
 	double max = *max_element(this->_v.begin(), this->_v.end());
 	double min = *min_element(this->_v.begin(), this->_v.end());
 
-	if (this->_actSize < 2) {
-		throw Span::TooFewException();
-	} else if (min == max) {
+	if (min == max) {
 		throw Span::IdenticalNumbersException();
 	}
 
-	return -1;
+	std::vector<int> temp = this->_v;
+	std::sort(temp.begin(), temp.end());
+
+	int span = max - min;
+	std::vector<int>::iterator i  = temp.begin();
+	std::vector<int>::iterator j = temp.begin();
+	++j;
+	while (j != temp.end()) {
+		if ((*j - *i) >= 0 && (*j - *i) < span) {
+			span = *j - *i;
+		}
+		++j;
+		++i;
+	}
+
+	return span;
 }
 
 // TOO FEW

@@ -59,6 +59,7 @@ public:
 	unsigned int getMaxSize(void) const;
 
 	void addNumber(int);
+	void addRandRange(int min, int max, int size);
 
 	int longestSpan(void) const;
 	int shortestSpan(void) const;
